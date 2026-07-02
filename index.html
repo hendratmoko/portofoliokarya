@@ -1,336 +1,331 @@
-<!doctype html>
-<html lang="id">
- <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260702-05-84893f2"}');</script><script src="/_sdk/f432b76fb310b513.telemetry_sdk.js" integrity="sha512-9FJQ55EKmmqhyyik8BhrMVfm0+iYYfb8uOlRsjtkxJMEI97qOVEI4PnHohDjQAtvAep0IOEpdQ64eki0sz62ug=="></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galeri Karya SMKN 1 Sanden</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-primary: #0f172a;
-      --bg-card: #1e293b;
-      --bg-input: #334155;
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --accent: #f59e0b;
-      --accent-hover: #d97706;
-    }
-    .light-mode {
-      --bg-primary: #f8fafc;
-      --bg-card: #ffffff;
-      --bg-input: #e2e8f0;
-      --text-primary: #1e293b;
-      --text-secondary: #64748b;
-      --accent: #d97706;
-      --accent-hover: #b45309;
-    }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); transition: background 0.3s, color 0.3s; }
-    .card-wrap { background: var(--bg-card); transition: transform 0.3s, box-shadow 0.3s; }
-    .card-wrap:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.25); }
-    .filter-btn.active { background: var(--accent); color: #fff; }
-    .hero-overlay { background: linear-gradient(180deg, rgba(15,23,42,0.7) 0%, rgba(15,23,42,0.95) 100%); }
-    .light-mode .hero-overlay { background: linear-gradient(180deg, rgba(248,250,252,0.6) 0%, rgba(248,250,252,0.95) 100%); }
-    .panel-bg { background: var(--bg-card); }
-    .input-field { background: var(--bg-input); color: var(--text-primary); border: 1px solid rgba(148,163,184,0.3); }
-    .input-field:focus { outline: 2px solid var(--accent); border-color: transparent; }
-    .star { cursor: pointer; transition: color 0.15s; }
-    .star.filled { color: #f59e0b; }
-    .star.empty { color: #475569; }
-    .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999; padding: 0.75rem 1.25rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-    .toast.show { opacity: 1; }
-    .toast.success { background: #16a34a; color: #fff; }
-    .toast.error { background: #dc2626; color: #fff; }
-  </style>
-  <script src="/_sdk/0179d719c431a79e.data_sdk.js" integrity="sha512-OsRvJkI5GkC3MJQcgotQYotpzrMSX415GiKKgvYdxQEEkzD/fdchShO2FMSy0PJr/tiINMXOk5Vl2zAgg6bUiA=="></script>
-  <script src="/_sdk/0b3af1c300e720aa.resizing_sdk.js" type="text/javascript" integrity="sha512-nX1P6oXZmEY5wCI2lUVg3BwKu1cr0yi+ZpXgZ0Yn90vkSwvpmyzBMvOyD6VLJUtBwFI2dSrw1b6OvORxSggw3w=="></script>
- </head>
- <body data-template-id="__page-root" class="min-h-screen w-full">
-  <div id="toast" class="toast" role="alert"></div><!-- Hero -->
-  <header class="relative overflow-hidden min-h-96"><img data-template-id="hero-bg" class="canva-image absolute inset-0 w-full h-full object-cover" loading="lazy">
-   <div class="hero-overlay absolute inset-0"></div>
-   <nav class="relative z-10 flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
-    <h1 data-template-id="site-title" class="canva-text font-bold" style="font-family:'Playfair Display',serif"></h1><button class="p-2 rounded-full opacity-80 hover:opacity-100" onclick="toggleTheme()" aria-label="Toggle theme"> <i data-lucide="moon" class="w-5 h-5"></i> </button>
-   </nav>
-   <div class="relative z-10 text-center px-6 py-12 max-w-3xl mx-auto">
-    <h2 data-template-id="hero-heading" class="canva-text font-bold" style="font-family:'Playfair Display',serif"></h2>
-    <p data-template-id="hero-sub" class="canva-text mt-4"></p>
-   </div>
-  </header><!-- Gallery -->
-  <main class="max-w-7xl mx-auto px-6 py-10">
-   <div class="flex flex-col gap-4 items-center justify-between mb-6">
-    <div id="filters" class="flex flex-wrap gap-2 justify-center"><button class="filter-btn active px-3 py-1.5 rounded-full text-xs font-medium" onclick="filterCards('all', this)">Semua</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('nkpi', this)">NKPI</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('tkpi', this)">TKPI</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('tphp', this)">TPHP</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('apat', this)">APAT</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('rpl', this)">RPL</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('tkr', this)">TKR</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('tpbo', this)">TPBO</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('matematika', this)">Matematika</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('informatika', this)">Informatika</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('kewirausahaan', this)">Kewirausahaan</button> <button class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border border-current opacity-70 hover:opacity-100" onclick="filterCards('seni_budaya', this)">Seni Budaya</button>
-    </div>
-    <div class="relative"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 opacity-50"></i> <input id="search-input" type="text" class="input-field rounded-full pl-9 pr-4 py-2 text-sm w-56" placeholder="Cari karya..." oninput="applyFilters()">
-    </div>
-   </div><!-- Static showcase cards -->
-   <div id="static-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-    <article class="card-wrap rounded-2xl overflow-hidden" data-category="nkpi"><img data-template-id="card1-img" class="canva-image w-full h-48 object-cover" loading="lazy">
-     <div class="p-5"><span data-template-id="card1-tag" class="canva-tag text-xs font-medium px-2 py-1 rounded-full"></span>
-      <h3 data-template-id="card1-title" class="canva-text mt-3 font-bold"></h3>
-      <p data-template-id="card1-student" class="canva-text mt-1 text-sm"></p>
-     </div>
-    </article>
-    <article class="card-wrap rounded-2xl overflow-hidden" data-category="tkpi"><img data-template-id="card2-img" class="canva-image w-full h-48 object-cover" loading="lazy">
-     <div class="p-5"><span data-template-id="card2-tag" class="canva-tag text-xs font-medium px-2 py-1 rounded-full"></span>
-      <h3 data-template-id="card2-title" class="canva-text mt-3 font-bold"></h3>
-      <p data-template-id="card2-student" class="canva-text mt-1 text-sm"></p>
-     </div>
-    </article>
-    <article class="card-wrap rounded-2xl overflow-hidden" data-category="tphp"><img data-template-id="card3-img" class="canva-image w-full h-48 object-cover" loading="lazy">
-     <div class="p-5"><span data-template-id="card3-tag" class="canva-tag text-xs font-medium px-2 py-1 rounded-full"></span>
-      <h3 data-template-id="card3-title" class="canva-text mt-3 font-bold"></h3>
-      <p data-template-id="card3-student" class="canva-text mt-1 text-sm"></p>
-     </div>
-    </article>
-    <article class="card-wrap rounded-2xl overflow-hidden" data-category="apat"><img data-template-id="card4-img" class="canva-image w-full h-48 object-cover" loading="lazy">
-     <div class="p-5"><span data-template-id="card4-tag" class="canva-tag text-xs font-medium px-2 py-1 rounded-full"></span>
-      <h3 data-template-id="card4-title" class="canva-text mt-3 font-bold"></h3>
-      <p data-template-id="card4-student" class="canva-text mt-1 text-sm"></p>
-     </div>
-    </article>
-    <article class="card-wrap rounded-2xl overflow-hidden" data-category="rpl"><img data-template-id="card5-img" class="canva-image w-full h-48 object-cover" loading="lazy">
-     <div class="p-5"><span data-template-id="card5-tag" class="canva-tag text-xs font-medium px-2 py-1 rounded-full"></span>
-      <h3 data-template-id="card5-title" class="canva-text mt-3 font-bold"></h3>
-      <p data-template-id="card5-student" class="canva-text mt-1 text-sm"></p>
-     </div>
-    </article>
-    <article class="card-wrap rounded-2xl overflow-hidden" data-category="tkr"><img data-template-id="card6-img" class="canva-image w-full h-48 object-cover" loading="lazy">
-     <div class="p-5"><span data-template-id="card6-tag" class="canva-tag text-xs font-medium px-2 py-1 rounded-full"></span>
-      <h3 data-template-id="card6-title" class="canva-text mt-3 font-bold"></h3>
-      <p data-template-id="card6-student" class="canva-text mt-1 text-sm"></p>
-     </div>
-    </article>
-   </div><!-- Dynamic cards -->
-   <div id="dynamic-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-   <p id="empty-dynamic" class="text-center opacity-50 text-sm mt-4 hidden">Belum ada karya yang diunggah siswa.</p>
-  </main><!-- Auth & Submit Section -->
-  <section class="max-w-xl mx-auto px-6 py-10"><!-- Auth -->
-   <div id="auth-section">
-    <div class="panel-bg rounded-2xl p-6 mb-6">
-     <h3 data-template-id="register-title" class="canva-text font-bold mb-4"></h3>
-     <form id="register-form" onsubmit="handleRegister(event)"><label data-template-id="reg-name-label" class="canva-text block text-sm mb-1" for="reg-name"></label> <input id="reg-name" type="text" class="input-field w-full rounded-lg px-3 py-2 mb-3 text-sm" required> <label data-template-id="reg-dept-label" class="canva-text block text-sm mb-1" for="reg-dept"></label> <input id="reg-dept" type="text" class="input-field w-full rounded-lg px-3 py-2 mb-3 text-sm" required> <label data-template-id="reg-contact-label" class="canva-text block text-sm mb-1" for="reg-contact"></label> <input id="reg-contact" type="text" class="input-field w-full rounded-lg px-3 py-2 mb-3 text-sm"> <button data-template-id="register-btn" type="submit" class="canva-button w-full py-2 rounded-lg font-bold text-sm"></button>
-      <p id="reg-result" class="hidden mt-3 text-sm font-medium text-center"></p>
-     </form>
-    </div>
-    <div class="panel-bg rounded-2xl p-6">
-     <h3 data-template-id="login-title" class="canva-text font-bold mb-4"></h3>
-     <form id="login-form" onsubmit="handleLogin(event)"><label data-template-id="login-code-label" class="canva-text block text-sm mb-1" for="login-code"></label> <input id="login-code" type="text" class="input-field w-full rounded-lg px-3 py-2 mb-3 text-sm" required> <button data-template-id="login-btn" type="submit" class="canva-button w-full py-2 rounded-lg font-bold text-sm"></button>
-     </form>
-    </div>
-   </div><!-- Submit Work -->
-   <div id="submit-section" class="hidden">
-    <div class="panel-bg rounded-2xl p-6">
-     <div class="flex items-center justify-between mb-4">
-      <h3 data-template-id="submit-title" class="canva-text font-bold"></h3><button class="text-sm opacity-70 hover:opacity-100 underline" onclick="logout()">Keluar</button>
-     </div>
-     <form id="submit-form" onsubmit="handleSubmitWork(event)"><label data-template-id="work-title-label" class="canva-text block text-sm mb-1" for="work-title"></label> <input id="work-title" type="text" class="input-field w-full rounded-lg px-3 py-2 mb-3 text-sm" required> <label data-template-id="work-desc-label" class="canva-text block text-sm mb-1" for="work-desc"></label> <textarea id="work-desc" class="input-field w-full rounded-lg px-3 py-2 mb-3 text-sm" rows="3"></textarea> <label data-template-id="work-cat-label" class="canva-text block text-sm mb-1" for="work-cat"></label> <select id="work-cat" class="input-field w-full rounded-lg px-3 py-2 mb-3 text-sm" required> <option value="nkpi">NKPI</option> <option value="tkpi">TKPI</option> <option value="tphp">TPHP</option> <option value="apat">APAT</option> <option value="rpl">RPL</option> <option value="tkr">TKR</option> <option value="tpbo">TPBO</option> <option value="matematika">Matematika</option> <option value="informatika">Informatika</option> <option value="kewirausahaan">Kewirausahaan</option> <option value="seni_budaya">Seni Budaya</option> </select> <label data-template-id="work-link-label" class="canva-text block text-sm mb-1" for="work-link"></label> <input id="work-link" type="url" class="input-field w-full rounded-lg px-3 py-2 mb-3 text-sm"> <button data-template-id="submit-btn" type="submit" class="canva-button w-full py-2 rounded-lg font-bold text-sm"></button>
-     </form>
-    </div>
-   </div>
-  </section>
-  <template id="work-card-template">
-   <article data-template-id="work-card" class="canva-card card-wrap rounded-2xl overflow-hidden">
-    <div class="p-5"><span data-template-id="work-card-tag" class="canva-tag text-xs font-medium px-2 py-1 rounded-full"></span>
-     <h3 data-template-id="work-card-title" class="canva-text mt-3 font-bold text-lg"></h3>
-     <p class="mt-1 text-sm opacity-70 work-desc"></p>
-     <p class="mt-1 text-sm opacity-60 work-student"></p>
-     <div class="flex items-center gap-1 mt-3 star-row"></div><a class="work-link mt-2 inline-block text-sm underline opacity-70 hover:opacity-100 hidden" target="_blank" rel="noopener noreferrer">Lihat Karya →</a>
-    </div>
-   </article>
-  </template>
-  <footer class="text-center py-8 opacity-60">
-   <p data-template-id="footer-text" class="canva-text text-sm"></p>
-  </footer>
-  <script src="/_sdk/6740099151a06780.editing_sdk.js" integrity="sha512-eSc5OWFJjK6fUpxViOKXm5ekJ3Gp5icgygsjPVz9Xzudb9TkX/uNdpqNHc63uN0PdxYE9+g8pZAHIib0FgE0Cw=="></script>
-  <script>
-    lucide.createIcons();
+```html
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri Karya | SMK Negeri 1 Sanden</title>
+<meta name="description"
+content="Galeri Karya Digital Guru dan Siswa SMK Negeri 1 Sanden">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ===========================
+     LOADING
+============================ -->
+<div id="loader">
+<div class="spinner-grow text-primary"></div>
+<p>Memuat Galeri...</p>
+</div>
+<!-- ===========================
+     BACKGROUND
+============================ -->
+<div class="bg-gradient"></div>
+<div class="circle circle1"></div>
+<div class="circle circle2"></div>
+<div class="circle circle3"></div>
+<!-- ===========================
+      NAVBAR
+============================ -->
+<nav class="navbar navbar-expand-lg fixed-top glass">
+<div class="container">
+<a class="navbar-brand d-flex align-items-center gap-3" href="#">
+<img src="assets/logo.png"
+height="55">
+<div>
+<h5 class="m-0 fw-bold">
+GALERI KARYA
+</h5>
+<small>
+SMK NEGERI 1 SANDEN
+</small>
+</div>
+</a>
+<button class="navbar-toggler"
+data-bs-toggle="collapse"
+data-bs-target="#menu">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse"
+id="menu">
+<ul class="navbar-nav ms-auto align-items-center">
+<li class="nav-item">
+<a class="nav-link"
+href="#gallery">
+Galeri
 
-    let isDark = true;
-    let allData = [];
-    let currentUser = null;
-    let currentFilter = 'all';
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link"
+href="#statistik">
+Statistik
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link"
+href="#tentang">
+Tentang
+</a>
+</li>
+<li class="nav-item ms-2">
+<button class="icon-btn"
+data-bs-toggle="modal"
+data-bs-target="#helpModal">
+<i class="bi bi-question-circle"></i>
+</button>
+</li>
+<li class="nav-item ms-2">
+<button class="icon-btn"
+id="themeToggle">
+<i class="bi bi-moon-stars"></i>
+</button>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- ===========================
+       HERO
+============================ -->
+<header class="hero">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6">
+<span class="badge bg-primary">
+PORTAL DIGITAL
+</span>
+<h1>
+Galeri Karya
+<span class="text-primary">
+SMK Negeri 1 Sanden
+</span>
+</h1>
+<p>
+Menampilkan berbagai karya terbaik guru dan siswa
 
-    const catNames = {
-      nkpi:'NKPI',tkpi:'TKPI',tphp:'TPHP',apat:'APAT',
-      rpl:'RPL',tkr:'TKR',tpbo:'TPBO',
-      matematika:'Matematika',informatika:'Informatika',
-      kewirausahaan:'Kewirausahaan',seni_budaya:'Seni Budaya'
-    };
-    const catColors = {
-      nkpi:'#0284c7',tkpi:'#0369a1',tphp:'#0891b2',apat:'#059669',
-      rpl:'#16a34a',tkr:'#d97706',tpbo:'#dc2626',
-      matematika:'#7c3aed',informatika:'#2563eb',
-      kewirausahaan:'#ca8a04',seni_budaya:'#c026d3'
-    };
+dalam bentuk video, dokumen, presentasi,
 
-    function toggleTheme() {
-      isDark = !isDark;
-      document.body.classList.toggle('light-mode', !isDark);
-    }
+gambar, audio maupun media pembelajaran
 
-    function showToast(msg, type) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.className = 'toast ' + type + ' show';
-      setTimeout(() => t.classList.remove('show'), 3000);
-    }
+interaktif.
 
-    function showAuthSection() {
-      document.getElementById('auth-section').classList.remove('hidden');
-      document.getElementById('submit-section').classList.add('hidden');
-    }
+</p>
+<div class="hero-button">
+<a href="#gallery"
+class="btn btn-primary btn-lg">
+<i class="bi bi-grid-fill"></i>
 
-    function showSubmitSection() {
-      document.getElementById('auth-section').classList.add('hidden');
-      document.getElementById('submit-section').classList.remove('hidden');
-    }
+Lihat Galeri
 
-    function generateCode() { return Math.random().toString(36).substring(2,8).toUpperCase(); }
+</a>
+<a href="#tentang"
+class="btn btn-outline-primary btn-lg">
+Tentang
+</a>
+</div>
+</div>
+<div class="col-lg-6 text-center">
+<img src="assets/hero.svg"
+class="img-fluid hero-image">
+</div>
+</div>
+</div>
+</header>
 
-    async function handleRegister(e) {
-      e.preventDefault();
-      const name = document.getElementById('reg-name').value.trim();
-      const dept = document.getElementById('reg-dept').value.trim();
-      const contact = document.getElementById('reg-contact').value.trim();
-      if (!name || !dept) return;
-      if (allData.length >= 999) { showToast('Batas data tercapai (999)','error'); return; }
-      const code = generateCode();
-      const btn = e.target.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = '...';
-      const result = await window.dataSdk.create({
-        name, status:'registered', department:dept, contact,
-        access_code:code, work_title:'', work_description:'',
-        work_category:'', work_link:'', work_visible:false,
-        stars:0, certified:false, quiz_score:0,
-        created_at: new Date().toISOString()
-      });
-      btn.disabled = false; btn.textContent = 'Daftar';
-      if (result.isOk) {
-        const res = document.getElementById('reg-result');
-        res.classList.remove('hidden');
-        res.textContent = 'Kode akses: ' + code;
-        res.style.color = 'var(--accent)';
-        e.target.reset();
-        showToast('Pendaftaran berhasil!','success');
-      } else { showToast('Gagal mendaftar','error'); }
-    }
+<!-- ===========================
+        STATISTIK
+============================ -->
 
-    function handleLogin(e) {
-      e.preventDefault();
-      const code = document.getElementById('login-code').value.trim();
-      const found = allData.find(d => d.access_code === code);
-      if (found) {
-        currentUser = found;
-        showSubmitSection();
-        showToast('Selamat datang, ' + found.name,'success');
-      } else { showToast('Kode akses tidak ditemukan','error'); }
-    }
+<section class="container"
+id="statistik">
+<div class="row g-4">
+<div class="col-md-3">
+<div class="stat-card">
+<i class="bi bi-collection-play-fill"></i>
+<h2 id="jumlahKarya">
 
-    function logout() {
-      currentUser = null;
-      showAuthSection();
-      showToast('Anda telah keluar','success');
-    }
+0
 
-    async function handleSubmitWork(e) {
-      e.preventDefault();
-      if (!currentUser) return;
-      const title = document.getElementById('work-title').value.trim();
-      const desc = document.getElementById('work-desc').value.trim();
-      const cat = document.getElementById('work-cat').value;
-      const link = document.getElementById('work-link').value.trim();
-      const btn = e.target.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = '...';
-      const updated = {...currentUser, work_title:title, work_description:desc, work_category:cat, work_link:link, work_visible:true};
-      const result = await window.dataSdk.update(updated);
-      btn.disabled = false; btn.textContent = 'Kirim Karya';
-      if (result.isOk) { showToast('Karya berhasil dikirim!','success'); e.target.reset(); }
-      else { showToast('Gagal mengirim','error'); }
-    }
+</h2>
+<p>
+Jumlah Karya
+</p>
+</div>
+</div>
+<div class="col-md-3">
+<div class="stat-card">
+<i class="bi bi-camera-video-fill"></i>
+<h2 id="jumlahVideo">
 
-    async function rateStar(record, stars) { await window.dataSdk.update({...record, stars}); }
+0
 
-    function renderDynamic(data) {
-      const container = document.getElementById('dynamic-gallery');
-      const visible = data.filter(d => d.work_visible && d.work_title);
-      document.getElementById('empty-dynamic').classList.toggle('hidden', visible.length > 0);
-      const existing = new Map([...container.children].map(el => [el.dataset.rid, el]));
-      const q = document.getElementById('search-input').value.toLowerCase();
-      const filtered = visible.filter(d => {
-        if (currentFilter !== 'all' && d.work_category !== currentFilter) return false;
-        if (q && !d.work_title.toLowerCase().includes(q) && !d.name.toLowerCase().includes(q)) return false;
-        return true;
-      });
-      filtered.forEach(item => {
-        let el = existing.get(item.__backendId);
-        if (!el) {
-          const tpl = document.getElementById('work-card-template');
-          el = tpl.content.cloneNode(true).firstElementChild;
-          el.dataset.rid = item.__backendId;
-          container.appendChild(el);
-        }
-        el.dataset.category = item.work_category;
-        el.querySelector('.work-desc').textContent = item.work_description || '';
-        el.querySelector('.work-student').textContent = item.name + ' — ' + item.department;
-        el.querySelector('[data-template-id="work-card-title"]').textContent = item.work_title;
-        const tag = el.querySelector('[data-template-id="work-card-tag"]');
-        tag.textContent = catNames[item.work_category] || item.work_category;
-        tag.style.background = catColors[item.work_category] || '#666';
-        tag.style.color = '#fff';
-        const linkEl = el.querySelector('.work-link');
-        if (item.work_link) { linkEl.href = item.work_link; linkEl.classList.remove('hidden'); }
-        else { linkEl.classList.add('hidden'); }
-        const starRow = el.querySelector('.star-row');
-        starRow.innerHTML = '';
-        for (let i = 1; i <= 5; i++) {
-          const s = document.createElement('span');
-          s.className = 'star ' + (i <= (item.stars||0) ? 'filled' : 'empty');
-          s.textContent = '★';
-          s.onclick = () => rateStar(item, i);
-          starRow.appendChild(s);
-        }
-        existing.delete(item.__backendId);
-      });
-      existing.forEach(el => el.remove());
-    }
+</h2>
+<p>
+Video
+</p>
+</div>
+</div>
+<div class="col-md-3">
+<div class="stat-card">
+<i class="bi bi-file-earmark-pdf-fill"></i>
+<h2 id="jumlahDokumen">
+0
+</h2>
+<p>
+Dokumen
+</p>
+</div>
+</div>
+<div class="col-md-3">
+<div class="stat-card">
+<i class="bi bi-people-fill"></i>
+<h2 id="jumlahPengguna">
+0
+</h2>
+<p>
+Guru & Siswa
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- ===========================
+      SEARCH
+============================ -->
+<section class="container my-5">
+<div class="search-panel glass">
+<div class="row g-3">
+<div class="col-lg-5">
+<div class="search-box">
+<i class="bi bi-search"></i>
+<input
+type="text"
+id="searchInput"
+placeholder="Cari judul karya, nama pembuat, mapel..."
+class="form-control">
+</div>
+</div>
+<div class="col-lg-7">
+<div class="filter-group">
+<button class="filter-chip active"
+data-filter="all">
+Semua
+</button>
+<button class="filter-chip"
+data-filter="Siswa">
+Siswa
+</button>
+<button class="filter-chip"
+data-filter="Guru">
+Guru
+</button>
+<button class="filter-chip"
+data-filter="youtube">
+Video
+</button>
+<button class="filter-chip"
+data-filter="pdf">
+PDF
+</button>
+<button class="filter-chip"
+data-filter="gambar">
+Gambar
+</button>
+<button class="filter-chip"
+data-filter="audio">
+Audio
+</button>
+<button class="filter-chip"
+data-filter="ppt">
+PPT
+</button>
+<button class="filter-chip"
+data-filter="word">
+Word
+</button>
+</div>
+</div>
+</div>
+<div class="row mt-4">
+<div class="col-lg-3">
+<select
+class="form-select"
+id="tahunFilter">
+<option value="">
+Semua Tahun
+</option>
+</select>
+</div>
+<div class="col-lg-3">
+<select
+class="form-select"
+id="mapelFilter">
+<option value="">
+Semua Mata Pelajaran
+</option>
+</select>
+</div>
+<div class="col-lg-3">
+<select
+class="form-select"
+id="mediaFilter">
+<option value="">
+Semua Media
+</option>
+<option>YouTube</option>
+<option>PDF</option>
+<option>Word</option>
+<option>PPT</option>
+<option>Spreadsheet</option>
+<option>Audio</option>
+<option>Gambar</option>
+</select>
+</div>
+<div class="col-lg-3">
+select
+class="form-select"
+id="sortFilter">
+<option value="terbaru">
+Terbaru
+</option>
+<option value="rating">
+Rating Tertinggi
+</option>
+<option value="populer">
+Paling Populer
+</option>
+<option value="nama">
+Nama A-Z
+</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- ===========================
+     GALERI
+============================ -->
+<section
+class="container"
+id="gallery">
+<div class="section-title">
+<h2>
+Galeri Karya
+</h2>
+<p>
+Klik salah satu karya untuk melihat preview.
+</p>
+</div>
+<div class="row g-4"
+id="galleryContainer">
+<!-- Seluruh card akan dibuat otomatis menggunakan script.js -->
+</div>
 
-    function filterCards(cat, btn) {
-      currentFilter = cat;
-      document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active'); b.style.background = ''; });
-      if (btn) btn.classList.add('active');
-      applyFilters();
-    }
-
-    function applyFilters() {
-      const q = document.getElementById('search-input').value.toLowerCase();
-      document.querySelectorAll('#static-gallery article').forEach(card => {
-        const catMatch = currentFilter === 'all' || card.dataset.category === currentFilter;
-        const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
-        const student = card.querySelector('p')?.textContent?.toLowerCase() || '';
-        const searchMatch = !q || title.includes(q) || student.includes(q);
-        card.style.display = catMatch && searchMatch ? '' : 'none';
-      });
-      renderDynamic(allData);
-    }
-
-    const handler = {
-      onDataChanged(data) {
-        allData = data;
-        if (currentUser) {
-          const updated = data.find(d => d.__backendId === currentUser.__backendId);
-          if (updated) currentUser = updated;
-        }
-        renderDynamic(data);
-      }
-    };
-
-    (async () => {
-      showAuthSection();
-      const res = await window.dataSdk.init(handler);
-      if (!res.isOk) showToast('Gagal memuat data','error');
-    })();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a14c4f2aa04045c8',t:'MTc4Mjk4MTI0NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+</section>
+```
