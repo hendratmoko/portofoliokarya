@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Galeri Karya SMKN 1 Sanden</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>body.dark{background:#0f172a;color:#fff}.card{border:1px solid #ddd}</style>
+</head><body class="dark">
+<div class="max-w-5xl mx-auto p-6">
+<div class="flex justify-between"><h1 class="text-3xl font-bold">Galeri Karya SMKN 1 Sanden</h1><button onclick="toggleTheme()" class="border px-3 py-1 rounded">Tema</button></div>
+<div class="grid md:grid-cols-2 gap-4 mt-6">
+<div class="card p-4 rounded">
+<h2 class="font-bold mb-2">Daftar</h2>
+<input id="nama" class="border p-2 w-full mb-2" placeholder="Nama">
+<input id="jurusan" class="border p-2 w-full mb-2" placeholder="Jurusan">
+<button onclick="daftar()" class="bg-blue-600 text-white px-3 py-2 rounded w-full">Daftar</button>
+<p id="kode" class="mt-2"></p></div>
+<div class="card p-4 rounded">
+<h2 class="font-bold mb-2">Login</h2>
+<input id="loginKode" class="border p-2 w-full mb-2" placeholder="Kode">
+<button onclick="login()" class="bg-green-600 text-white px-3 py-2 rounded w-full">Masuk</button>
+</div></div>
+<div id="upload" class="hidden card p-4 rounded mt-6">
+<h2 class="font-bold mb-2">Upload Karya</h2>
+<input id="judul" class="border p-2 w-full mb-2" placeholder="Judul">
+<select id="kategori" class="border p-2 w-full mb-2"><option>Multimedia</option><option>Desain</option><option>Pemrograman</option><option>Kerajinan</option></select>
+<textarea id="deskripsi" class="border p-2 w-full mb-2" placeholder="Deskripsi"></textarea>
+<input id="link" class="border p-2 w-full mb-2" placeholder="Link">
+<button onclick="upload()" class="bg-purple-600 text-white px-3 py-2 rounded">Simpan</button>
+</div>
+<input id="cari" oninput="render()" class="border p-2 w-full mt-6" placeholder="Cari karya">
+<div id="galeri" class="grid md:grid-cols-3 gap-4 mt-4"></div>
+</div>
+<script>
+let user=null;
+const get=()=>JSON.parse(localStorage.data||"[]");
+const save=d=>localStorage.data=JSON.stringify(d);
+function toggleTheme(){document.body.classList.toggle("dark")}
+function daftar(){
+let d=get(),k=Math.random().toString(36).substr(2,6).toUpperCase();
+d.push({id:Date.now(),nama:nama.value,jurusan:jurusan.value,kode:k});
+save(d);kode.textContent="Kode: "+k;nama.value=jurusan.value="";
+}
+function login(){user=get().find(x=>x.kode==loginKode.value);if(user){upload.classList.remove("hidden");alert("Login berhasil")}else alert("Kode salah")}
+function upload(){
+let d=get();let u=d.find(x=>x.id==user.id);
+Object.assign(u,{judul:judul.value,kat:kategori.value,desk:deskripsi.value,link:link.value,bintang:u.bintang||0});
+save(d);render();judul.value=deskripsi.value=link.value="";
+}
+function rate(id,n){let d=get();d.find(x=>x.id==id).bintang=n;save(d);render();}
+function render(){
+let q=cari.value.toLowerCase();galeri.innerHTML="";
+get().filter(x=>x.judul&&((x.judul+x.nama).toLowerCase().includes(q))).forEach(x=>{
+let s="";for(let i=1;i<=5;i++)s+=`<span style="cursor:pointer;color:${i<=x.bintang?'orange':'gray'}" onclick="rate(${x.id},${i})">★</span>`;
+galeri.innerHTML+=`<div class="card rounded p-4"><h3 class="font-bold">${x.judul}</h3><p>${x.nama} - ${x.jurusan}</p><p>${x.kat}</p><p>${x.desk||""}</p>${x.link?`<a class="text-blue-600" target="_blank" href="${x.link}">Lihat</a>`:""}<div>${s}</div></div>`;
+});
+}
+render();
+</script></body></html>
