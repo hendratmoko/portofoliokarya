@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "judul": "Video Pembelajaran HTML",
+    "pembuat": "Andi Saputra",
+    "status": "Siswa",
+    "kelas": "XII RPL",
+    "tahun": 2025,
+    "mapel": "Informatika",
+    "kategori": "Video",
+    "jenis": "youtube",
+    "link": "https://youtu.be/9cEIqs90vEA",
+    "deskripsi": "Video pembelajaran HTML.",
+    "thumbnail": "",
+    "publish": true
+  },
+  {
+    "id": 2,
+    "judul": "Modul HTML",
+    "pembuat": "Nur Aini",
+    "status": "Guru",
+    "tahun": 2024,
+    "mapel": "Informatika",
+    "kategori": "Dokumen",
+    "jenis": "pdf",
+    "link": "https://drive.google.com/file/d/xxxxx/view",
+    "deskripsi": "Modul pembelajaran HTML.",
+    "thumbnail": "",
+    "publish": true
+  }
+]
