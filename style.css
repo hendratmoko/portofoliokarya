@@ -1,0 +1,561 @@
+```css
+/* ===================================================
+   GALERI KARYA SMKN 1 SANDEN
+   STYLE.CSS
+=================================================== */
+
+/* ===============================
+   GOOGLE FONT
+=============================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/* ===============================
+   ROOT
+=============================== */
+
+:root{
+
+--primary:#2563eb;
+--secondary:#3b82f6;
+--success:#10b981;
+--warning:#f59e0b;
+--danger:#ef4444;
+
+--text:#1f2937;
+--text-light:#6b7280;
+
+--white:#ffffff;
+--background:#f5f7fb;
+
+--glass:rgba(255,255,255,.55);
+--glass-border:rgba(255,255,255,.35);
+
+--shadow:
+
+0 10px 30px rgba(0,0,0,.08);
+
+--shadow-hover:
+
+0 20px 60px rgba(0,0,0,.18);
+
+--radius:22px;
+
+--transition:.35s ease;
+
+}
+
+
+/* ===============================
+   DARK MODE
+=============================== */
+
+[data-theme="dark"]{
+
+--background:#0f172a;
+
+--text:#f3f4f6;
+
+--text-light:#cbd5e1;
+
+--glass:
+
+rgba(20,25,40,.65);
+
+--glass-border:
+
+rgba(255,255,255,.08);
+
+--shadow:
+
+0 15px 40px rgba(0,0,0,.45);
+
+}
+
+
+/* ===============================
+   RESET
+=============================== */
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:var(--background);
+
+color:var(--text);
+
+overflow-x:hidden;
+
+transition:.35s;
+
+line-height:1.7;
+
+}
+
+
+/* ===============================
+   SCROLLBAR
+=============================== */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#edf2f7;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:var(--primary);
+
+border-radius:30px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#1d4ed8;
+
+}
+
+
+/* ===============================
+   LINK
+=============================== */
+
+a{
+
+text-decoration:none;
+
+transition:.3s;
+
+color:inherit;
+
+}
+
+a:hover{
+
+color:var(--primary);
+
+}
+
+
+/* ===============================
+   IMAGE
+=============================== */
+
+img{
+
+max-width:100%;
+
+display:block;
+
+}
+
+
+/* ===============================
+   SECTION
+=============================== */
+
+section{
+
+padding:90px 0;
+
+}
+
+
+/* ===============================
+   CONTAINER
+=============================== */
+
+.container{
+
+position:relative;
+
+z-index:2;
+
+}
+
+
+/* ===============================
+   BACKGROUND
+=============================== */
+
+.bg-gradient{
+
+position:fixed;
+
+inset:0;
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#f8fbff,
+
+#eef5ff,
+
+#ffffff
+
+);
+
+z-index:-10;
+
+}
+
+[data-theme="dark"] .bg-gradient{
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#08101f,
+
+#0f172a,
+
+#16213f
+
+);
+
+}
+
+
+/* ===============================
+   FLOATING CIRCLE
+=============================== */
+
+.circle{
+
+position:fixed;
+
+border-radius:50%;
+
+filter:blur(80px);
+
+opacity:.45;
+
+animation:float 10s ease-in-out infinite;
+
+z-index:-5;
+
+}
+
+.circle1{
+
+width:280px;
+
+height:280px;
+
+background:#60a5fa;
+
+top:-80px;
+
+left:-60px;
+
+}
+
+.circle2{
+
+width:350px;
+
+height:350px;
+
+background:#8b5cf6;
+
+right:-80px;
+
+top:180px;
+
+animation-delay:2s;
+
+}
+
+.circle3{
+
+width:260px;
+
+height:260px;
+
+background:#38bdf8;
+
+bottom:-80px;
+
+left:40%;
+
+animation-delay:4s;
+
+}
+
+
+/* ===============================
+   GLASS EFFECT
+=============================== */
+
+.glass{
+
+background:var(--glass);
+
+backdrop-filter:blur(18px);
+
+-webkit-backdrop-filter:blur(18px);
+
+border:1px solid var(--glass-border);
+
+box-shadow:var(--shadow);
+
+}
+
+
+/* ===============================
+   BUTTON
+=============================== */
+
+.btn{
+
+border-radius:14px;
+
+font-weight:600;
+
+transition:var(--transition);
+
+}
+
+.btn-primary{
+
+background:linear-gradient(
+
+135deg,
+
+var(--primary),
+
+var(--secondary)
+
+);
+
+border:none;
+
+}
+
+.btn-primary:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+
+0 12px 25px
+
+rgba(37,99,235,.35);
+
+}
+
+
+/* ===============================
+   ICON BUTTON
+=============================== */
+
+.icon-btn{
+
+width:45px;
+
+height:45px;
+
+border-radius:50%;
+
+border:none;
+
+background:var(--glass);
+
+backdrop-filter:blur(15px);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:1.2rem;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.icon-btn:hover{
+
+transform:rotate(15deg) scale(1.08);
+
+background:var(--primary);
+
+color:white;
+
+}
+
+
+/* ===============================
+   BADGE
+=============================== */
+
+.badge{
+
+border-radius:50px;
+
+padding:8px 16px;
+
+font-weight:600;
+
+}
+
+
+/* ===============================
+   TITLE
+=============================== */
+
+.section-title{
+
+text-align:center;
+
+margin-bottom:60px;
+
+}
+
+.section-title h2{
+
+font-size:2.4rem;
+
+font-weight:800;
+
+margin-bottom:15px;
+
+}
+
+.section-title p{
+
+color:var(--text-light);
+
+max-width:700px;
+
+margin:auto;
+
+}
+
+
+/* ===============================
+   LOADER
+=============================== */
+
+#loader{
+
+position:fixed;
+
+inset:0;
+
+background:white;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+gap:20px;
+
+z-index:99999;
+
+transition:.5s;
+
+}
+
+[data-theme="dark"] #loader{
+
+background:#08101f;
+
+}
+
+
+/* ===============================
+   ANIMATION
+=============================== */
+
+@keyframes float{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-35px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+
+/* ===============================
+   FADE
+=============================== */
+
+.fade-up{
+
+animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(35px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+```
