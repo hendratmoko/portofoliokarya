@@ -302,9 +302,10 @@ box-shadow:none;
 HERO
 ==========================*/
 .hero{
-padding:140px 0 90px;
-position:relative;
-overflow:hidden;
+min-height:100vh;
+padding:140px 0 80px;
+display:flex;
+align-items:center;
 }
 
 .hero .badge{
