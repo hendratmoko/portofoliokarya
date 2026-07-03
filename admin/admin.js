@@ -1,6 +1,6 @@
 // Admin JS for backend input page
 // GANTI WEBAPP_URL dengan URL WebApp Anda setelah deploy Google Apps Script
-const WEBAPP_URL = 'WEBAPP_URL_PLACEHOLDER';
+const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzM2dMMqleFFlIkf8Ffx2e_MSXjR3wBSPs1sEMZyiebWpWn82T10XkPWsDq9aRclkLe2w/exec';
 
 const loginBox = document.getElementById('loginBox');
 const formBox = document.getElementById('formBox');
