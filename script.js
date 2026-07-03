@@ -2,7 +2,7 @@
 KONFIGURASI
 ========================== */
 const CONFIG={
-WEBAPP_URL:"https://script.google.com/macros/s/AKfycbyfvbPNn0ugQMHmn5BFAbRyOigMjJT_lb7970hG9YBt/dev",
+WEBAPP_URL:"https://script.google.com/macros/s/AKfycbxEVlFNm4PswXyyeFYwZhVKonoDHkIDU1Ai11ngPRxs9mWkSlTEYPDH6Qszh1XSpUOEfQ/exec",
 /*ACCESS_CODE:"SMKN1SANDEN2026",*/
 ITEM_PER_LOAD:9
 };
