@@ -303,7 +303,7 @@ HERO
 ==========================*/
 .hero{
 min-height:100vh;
-padding:140px 0 80px;
+padding:170px 0 80px;
 display:flex;
 align-items:center;
 }
