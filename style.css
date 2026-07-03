@@ -1,4 +1,3 @@
-```css
 /*==========================
 RESET
 ==========================*/
@@ -303,7 +302,7 @@ HERO
 ==========================*/
 .hero{
 min-height:100vh;
-padding:170px 0 80px;
+padding:160px 0 90px;
 display:flex;
 align-items:center;
 }
@@ -567,7 +566,7 @@ padding:8px 14px;
 height:46px;
 }
 }
-```css
+
 /*==========================
 GALERI
 ==========================*/
@@ -905,7 +904,7 @@ font-size:.72rem;
 padding:6px 10px;
 }
 }
-```css
+
 /*==========================
 PREVIEW MODAL
 ==========================*/
