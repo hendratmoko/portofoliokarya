@@ -360,97 +360,59 @@ container.insertAdjacentHTML("beforeend",createCard(item,index));
 CARD TEMPLATE
 ==========================*/
 function createCard(item,index){
-
 const media=getMediaType(item.link);
-
 const badge=getMediaBadge(media);
-
 const thumb=getThumbnail(item.link,media);
-
 const star=getStars(Number(item.rating||5));
-
 const avatar=item.author?item.author.charAt(0).toUpperCase():"A";
-
 return`
-
 <div class="col-xl-4 col-lg-4 col-md-6 fade-up">
-
 <div class="gallery-card">
-
 <div class="gallery-image">
-
 <img src="${thumb}" loading="lazy">
-
 <span class="media-badge">${badge}</span>
-
 <span class="category-badge">${item.category||"-"}</span>
-
 </div>
-
 <div class="gallery-content">
-
 <h5 class="gallery-title">
-
 ${item.title}
-
 </h5>
-
 <p class="gallery-description">
-
 ${item.description||""}
-
 </p>
-
 <div class="gallery-meta">
-
 <div class="gallery-author">
-
 <div class="gallery-avatar">
-
 ${avatar}
-
 </div>
-
 <div>
-
 <strong>${item.author}</strong>
-
 <span>${item.subject||""}</span>
-
 </div>
-
 </div>
-
 <div class="gallery-rating">
-
 ${star}
-
 </div>
-
 </div>
 
 <div class="gallery-footer">
-
 <button class="btn btn-primary"
-
 onclick="openPreview(${index})">
-
-<i class="bi bi-eye"></i>
-
 Preview
-
 </button>
-
+<button class="btn btn-warning"
+onclick="editData('${item.id}')">
+Edit
+</button>
+<button class="btn btn-danger"
+onclick="deleteData('${item.id}')">
+Hapus
+</button>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 `;
-
 }
 
 /*==========================
