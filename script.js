@@ -254,7 +254,7 @@ checkLogin();
 
 });
 
-```javascript
+
 /*==========================
 LOAD DATA GOOGLE SHEETS
 ==========================*/
@@ -601,7 +601,6 @@ loadGallery();
 
 });
 
-```javascript
 /*==========================
 ELEMENT FILTER
 ==========================*/
@@ -910,7 +909,6 @@ toggleLoadMore();
 
 });
 
-```javascript
 /*==========================
 PREVIEW MODAL
 ==========================*/
@@ -1199,7 +1197,7 @@ previewModal.hide();
 
 });
 
-```javascript id="adm5a01"
+
 /*==========================
 ADMIN ELEMENT
 ==========================*/
@@ -1521,7 +1519,7 @@ showDashboard();
 
 });
 
-```javascript id="adm5b01"
+
 /*==========================
 SUBMIT GOOGLE SHEETS
 ==========================*/
@@ -1536,7 +1534,7 @@ showLoading();
 btnSubmit.disabled=true;
 
 const payload={
-
+action:"create",
 title:title.value.trim(),
 description:description.value.trim(),
 category:category.value.trim(),
@@ -1547,24 +1545,17 @@ author:author.value.trim(),
 whatsappNumber:whatsappNumber.value.trim(),
 certificate:createCertificate.value,
 visible:visibleToggle.checked,
-createdAt:new Date().toISOString(),
 rating:5,
 view:0
-
 };
 
 try{
-
 const response=await fetch(CONFIG.WEBAPP_URL,{
-
 method:"POST",
-
 headers:{
 "Content-Type":"application/json"
 },
-
 body:JSON.stringify(payload)
-
 });
 
 const result=await response.json();
@@ -1620,7 +1611,56 @@ showError("Terjadi kesalahan koneksi.");
 }
 
 }
+/*==========================
+UPDATE DATA
+==========================*/
+async function updateData(id){
+const payload={
+action:"update",
+id:id,
+title:title.value.trim(),
+description:description.value.trim(),
+category:category.value.trim(),
+link:link.value.trim(),
+year:year.value.trim(),
+subject:subject.value.trim(),
+author:author.value.trim(),
+whatsappNumber:whatsappNumber.value.trim(),
+certificate:createCertificate.value,
+visible:visibleToggle.checked
+};
+const response=await fetch(CONFIG.WEBAPP_URL,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(payload)
+});
+const result=await response.json();
+showToast(result.message);
+loadGallery();
+}
 
+/*==========================
+Hapus Data
+==========================*/
+async function deleteData(id){
+if(!confirm("Hapus data ini?"))return;
+const payload={
+action:"delete",
+id:id
+};
+const response=await fetch(CONFIG.WEBAPP_URL,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(payload)
+});
+const result=await response.json();
+showToast(result.message);
+loadGallery();
+}
 /*==========================
 VALIDASI RESPONSE
 ==========================*/
@@ -1679,7 +1719,6 @@ checkServer();
 
 });
 
-```javascript id="adm5b02"
 /*==========================
 GENERATE CERTIFICATE
 ==========================*/
