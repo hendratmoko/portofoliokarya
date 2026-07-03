@@ -1,7 +1,6 @@
 /* ==========================================================
    GALERI KARYA SMKN 1 SANDEN
-   script.js
-   Bagian 1
+   script.js - IMPROVED VERSION
 ========================================================== */
 
 "use strict";
@@ -11,110 +10,76 @@
 ========================================================== */
 
 const App = {
-
     theme: "light",
-
     gallery: [],
-
     filteredGallery: [],
-
-    comments: {},
-
-    ratings: {},
-
+    currentFilter: "all",
+    itemsPerPage: 9,
+    currentPage: 1,
     initialized: false
-
 };
-
 
 /* ==========================================================
    SHORTCUT ELEMENT
 ========================================================== */
 
 const $ = (selector) => document.querySelector(selector);
-
 const $$ = (selector) => document.querySelectorAll(selector);
-
 
 /* ==========================================================
    DOM READY
 ========================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-
     initializeApp();
-
+    loadGallery();
 });
-
 
 /* ==========================================================
    INITIALIZE
 ========================================================== */
 
 function initializeApp(){
-
     if(App.initialized) return;
-
     App.initialized = true;
 
     initTheme();
-
     initNavbar();
-
     initLoader();
-
     initBackToTop();
-
     initRefreshButton();
-
     initTooltips();
-
     initFadeAnimation();
 
-    console.log("Galeri Karya SMKN 1 Sanden Ready.");
-
+    console.log("✅ Galeri Karya SMKN 1 Sanden Ready.");
 }
-
 
 /* ==========================================================
    LOADER
 ========================================================== */
 
 function initLoader(){
-
     const loader = $("#loader");
-
     if(!loader) return;
 
     window.addEventListener("load",()=>{
-
         setTimeout(()=>{
-
             loader.style.opacity="0";
-
             loader.style.visibility="hidden";
-
         },700);
-
     });
-
 }
-
 
 /* ==========================================================
    THEME
 ========================================================== */
 
 function initTheme(){
-
     const btn = $("#themeToggle");
-
     const savedTheme = localStorage.getItem("theme");
 
     if(savedTheme){
-
         App.theme = savedTheme;
-
     }
 
     applyTheme();
@@ -122,354 +87,167 @@ function initTheme(){
     if(!btn) return;
 
     btn.addEventListener("click",()=>{
-
-        App.theme =
-
-            App.theme==="light"
-
-            ? "dark"
-
-            : "light";
-
+        App.theme = App.theme==="light" ? "dark" : "light";
         applyTheme();
-
     });
-
 }
-
 
 function applyTheme(){
-
-    document.documentElement.setAttribute(
-
-        "data-theme",
-
-        App.theme
-
-    );
-
-    localStorage.setItem(
-
-        "theme",
-
-        App.theme
-
-    );
+    document.documentElement.setAttribute("data-theme", App.theme);
+    localStorage.setItem("theme", App.theme);
 
     const icon=$("#themeToggle i");
-
     if(icon){
-
         if(App.theme==="dark"){
-
             icon.className="bi bi-sun-fill";
-
-        }
-
-        else{
-
+        } else {
             icon.className="bi bi-moon-stars-fill";
-
         }
-
     }
-
 }
-
 
 /* ==========================================================
    NAVBAR SCROLL
 ========================================================== */
 
 function initNavbar(){
-
     const navbar=$(".navbar");
-
     if(!navbar) return;
 
     window.addEventListener("scroll",()=>{
-
         if(window.scrollY>40){
-
             navbar.classList.add("scrolled");
-
-        }
-
-        else{
-
+        } else {
             navbar.classList.remove("scrolled");
-
         }
-
     });
-
 }
-
 
 /* ==========================================================
    BACK TO TOP
 ========================================================== */
 
 function initBackToTop(){
-
     const btn=$("#backToTop");
-
     if(!btn) return;
 
     window.addEventListener("scroll",()=>{
-
         if(window.scrollY>350){
-
             btn.classList.add("show");
-
-        }
-
-        else{
-
+        } else {
             btn.classList.remove("show");
-
         }
-
     });
 
     btn.addEventListener("click",()=>{
-
         window.scrollTo({
-
             top:0,
-
             behavior:"smooth"
-
         });
-
     });
-
 }
-
 
 /* ==========================================================
    REFRESH
 ========================================================== */
 
 function initRefreshButton(){
-
     const btn=$("#refreshGallery");
-
     if(!btn) return;
 
     btn.addEventListener("click",()=>{
-
         btn.style.transform="rotate(360deg)";
-
         setTimeout(()=>{
-
             btn.style.transform="";
-
         },500);
-
         location.reload();
-
     });
-
 }
-
 
 /* ==========================================================
    TOOLTIP
 ========================================================== */
 
 function initTooltips(){
-
     if(typeof bootstrap==="undefined") return;
 
     const tooltipTriggerList=[].slice.call(
-
-        document.querySelectorAll(
-
-            '[data-bs-toggle="tooltip"]'
-
-        )
-
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
     );
 
     tooltipTriggerList.map(el=>{
-
         return new bootstrap.Tooltip(el);
-
     });
-
 }
-
 
 /* ==========================================================
    FADE ANIMATION
 ========================================================== */
 
 function initFadeAnimation(){
-
     const observer=new IntersectionObserver(
-
         entries=>{
-
             entries.forEach(entry=>{
-
                 if(entry.isIntersecting){
-
                     entry.target.classList.add("fade-up");
-
                 }
-
             });
-
         },
-
-        {
-
-            threshold:.15
-
-        }
-
+        { threshold:.15 }
     );
 
     $$("section").forEach(section=>{
-
         observer.observe(section);
-
     });
-
 }
-
-
-/* ==========================================================
-   HELP MODAL
-========================================================== */
-
-const helpButton=$("#helpButton");
-
-if(helpButton){
-
-    helpButton.addEventListener("click",()=>{
-
-        const modal=new bootstrap.Modal(
-
-            $("#helpModal")
-
-        );
-
-        modal.show();
-
-    });
-
-}
-
 
 /* ==========================================================
    KEYBOARD SHORTCUT
 ========================================================== */
 
 document.addEventListener("keydown",(e)=>{
-
-    /* ESC */
-
     if(e.key==="Escape"){
-
         const modal=document.querySelector(".modal.show");
-
         if(modal){
-
             bootstrap.Modal.getInstance(modal).hide();
-
         }
-
     }
-
-    /* CTRL + D */
 
     if(e.ctrlKey && e.key.toLowerCase()==="d"){
-
         e.preventDefault();
-
         const btn=$("#themeToggle");
-
-        if(btn){
-
-            btn.click();
-
-        }
-
+        if(btn) btn.click();
     }
-
 });
-
 
 /* ==========================================================
    RIPPLE EFFECT
 ========================================================== */
 
 document.addEventListener("click",(e)=>{
-
     const btn=e.target.closest(".btn");
-
     if(!btn) return;
 
     const ripple=document.createElement("span");
-
     ripple.className="ripple";
 
     const rect=btn.getBoundingClientRect();
-
     ripple.style.left=(e.clientX-rect.left)+"px";
-
     ripple.style.top=(e.clientY-rect.top)+"px";
 
     btn.appendChild(ripple);
 
     setTimeout(()=>{
-
         ripple.remove();
-
     },600);
-
 });
 
-
 /* ==========================================================
-   WINDOW RESIZE
-========================================================== */
-
-window.addEventListener("resize",()=>{
-
-    console.log(
-
-        "Window :",
-
-        window.innerWidth,
-
-        "x",
-
-        window.innerHeight
-
-    );
-
-});
-
-
-/* ==========================================================
-   END
-========================================================== */
-
-console.log("script.js Part 1 Loaded.");
-
-```javascript
-/* ==========================================================
-   BAGIAN 2
    LOAD DATA.JSON
 ========================================================== */
 
 async function loadGallery() {
-
     try {
-
         showLoading(true);
 
         const response = await fetch("data.json");
@@ -480,19 +258,18 @@ async function loadGallery() {
         const data = await response.json();
 
         App.gallery = data.filter(item => item.publish === true);
-
         App.filteredGallery = [...App.gallery];
 
+        populateFilters();
         renderGallery(App.filteredGallery);
-
-        updateTotalResult();
+        updateStatistics();
+        initSearch();
+        initFilterEvents();
 
         showLoading(false);
 
     } catch (err) {
-
-        console.error(err);
-
+        console.error("❌", err);
         showLoading(false);
 
         $("#galleryContainer").innerHTML = `
@@ -501,9 +278,7 @@ async function loadGallery() {
                 <p>${err.message}</p>
             </div>
         `;
-
     }
-
 }
 
 /* ==========================================================
@@ -511,43 +286,34 @@ async function loadGallery() {
 ========================================================== */
 
 function showLoading(show){
-
     const loading=$("#loadingGallery");
-
     if(!loading) return;
-
     loading.classList.toggle("d-none",!show);
-
 }
 
 /* ==========================================================
-   RENDER GALERI
+   RENDER GALERI (FIXED PERFORMANCE)
 ========================================================== */
 
 function renderGallery(data){
-
     const container=$("#galleryContainer");
-
     if(!container) return;
 
     container.innerHTML="";
 
     if(data.length===0){
-
         $("#emptyState")?.classList.remove("d-none");
-
         return;
-
     }
 
     $("#emptyState")?.classList.add("d-none");
 
-    data.forEach(item=>{
+    // ✅ PERBAIKAN: Gabung HTML dulu, baru set innerHTML sekali
+    const html = data.map(item => createGalleryCard(item)).join("");
+    container.innerHTML = html;
 
-        container.innerHTML += createGalleryCard(item);
-
-    });
-
+    // ✅ Attach event listeners setelah render
+    attachCardEventListeners();
 }
 
 /* ==========================================================
@@ -555,157 +321,98 @@ function renderGallery(data){
 ========================================================== */
 
 function createGalleryCard(item){
+    const stars = createStars(item.rating || 4.0);
+    const rating = (item.rating || 4.0).toFixed(1);
 
     return `
-
-<div class="col-lg-4 col-md-6 fade-up">
-
-<div class="gallery-card">
-
-<div class="card-badge ${item.status.toLowerCase()}">
-
-${item.status}
-
-</div>
-
-<button class="favorite-btn">
-
-<i class="bi bi-heart"></i>
-
-</button>
-
-<div class="media-preview">
-
-${createPreview(item)}
-
-<div class="play-overlay">
-
-<i class="bi bi-play-circle-fill"></i>
-
-</div>
-
-</div>
-
-<div class="card-content">
-
-<div class="media-type">
-
-<span class="badge bg-primary">
-
-${item.jenis.toUpperCase()}
-
-</span>
-
-</div>
-
-<h4 class="card-title">
-
-${item.judul}
-
-</h4>
-
-<p class="card-description">
-
-${item.deskripsi}
-
-</p>
-
-<div class="creator">
-
-<img
-
-class="creator-photo"
-
-src="https://ui-avatars.com/api/?name=${encodeURIComponent(item.pembuat)}&background=2563eb&color=ffffff">
-
-<div>
-
-<strong>
-
-${item.pembuat}
-
-</strong>
-
-<small>
-
-${item.status}
-
-${item.kelas ?? ""}
-
-</small>
-
-</div>
-
-</div>
-
-<div class="meta">
-
-<span>
-
-<i class="bi bi-calendar3"></i>
-
-${item.tahun}
-
-</span>
-
-<span>
-
-<i class="bi bi-book"></i>
-
-${item.mapel}
-
-</span>
-
-</div>
-
-<div class="rating-area">
-
-<div class="stars">
-
-<i class="bi bi-star-fill"></i>
-
-<i class="bi bi-star-fill"></i>
-
-<i class="bi bi-star-fill"></i>
-
-<i class="bi bi-star-fill"></i>
-
-<i class="bi bi-star-half"></i>
-
-</div>
-
-<strong>
-
-4.8
-
-</strong>
-
-</div>
-
-<div class="card-footer-action">
-
-<button
-
-class="btn btn-primary previewBtn"
-
-data-id="${item.id}">
-
-<i class="bi bi-eye"></i>
-
-Lihat Karya
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
+    <div class="col-lg-4 col-md-6 fade-up">
+        <article class="gallery-card">
+            <div class="card-badge ${item.status.toLowerCase()}">
+                <i class="bi bi-${item.status === 'Guru' ? 'award' : 'stars'}"></i>
+                ${item.status}
+            </div>
+
+            <button class="favorite-btn" data-id="${item.id}">
+                <i class="bi bi-heart"></i>
+            </button>
+
+            <div class="media-preview">
+                ${createPreview(item)}
+                <div class="play-overlay">
+                    <i class="bi bi-play-circle-fill"></i>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <div class="media-type">
+                    <span class="badge bg-primary">
+                        ${item.jenis.toUpperCase()}
+                    </span>
+                </div>
+
+                <h4 class="card-title">
+                    ${item.judul}
+                </h4>
+
+                <p class="card-description">
+                    ${item.deskripsi}
+                </p>
+
+                <div class="creator">
+                    <img class="creator-photo"
+                        src="https://ui-avatars.com/api/?name=${encodeURIComponent(item.pembuat)}&background=2563eb&color=ffffff">
+                    <div>
+                        <strong>${item.pembuat}</strong>
+                        <small>${item.status} ${item.kelas ?? ""}</small>
+                    </div>
+                </div>
+
+                <div class="meta">
+                    <span>
+                        <i class="bi bi-calendar3"></i>
+                        ${item.tahun}
+                    </span>
+                    <span>
+                        <i class="bi bi-book"></i>
+                        ${item.mapel}
+                    </span>
+                </div>
+
+                <div class="rating-area">
+                    <div class="stars">
+                        ${stars}
+                    </div>
+                    <strong>${rating}</strong>
+                </div>
+
+                <div class="card-footer-action">
+                    <button class="btn btn-primary w-100 previewBtn" data-id="${item.id}">
+                        <i class="bi bi-eye"></i>
+                        Lihat Karya
+                    </button>
+                </div>
+            </div>
+        </article>
+    </div>
+    `;
+}
+
+/* ==========================================================
+   CREATE STARS (DYNAMIC RATING)
+========================================================== */
+
+function createStars(rating){
+    let stars = "";
+    for(let i = 1; i <= 5; i++){
+        if(i <= rating){
+            stars += `<i class="bi bi-star-fill"></i>`;
+        } else if(i - rating < 1){
+            stars += `<i class="bi bi-star-half"></i>`;
+        } else {
+            stars += `<i class="bi bi-star"></i>`;
+        }
+    }
+    return stars;
 }
 
 /* ==========================================================
@@ -713,108 +420,40 @@ Lihat Karya
 ========================================================== */
 
 function createPreview(item){
-
     switch(item.jenis.toLowerCase()){
-
         case "youtube":
-
-            return `
-            <img
-            src="${youtubeThumbnail(item.link)}"
-            alt="${item.judul}">
-            `;
+            return `<img src="${youtubeThumbnail(item.link)}" alt="${item.judul}">`;
 
         case "pdf":
-
-            return `
-            <div class="file-preview">
-
-            <i class="bi bi-file-earmark-pdf-fill file-icon pdf"></i>
-
-            </div>
-            `;
+            return `<div class="file-preview"><i class="bi bi-file-earmark-pdf-fill file-icon pdf"></i></div>`;
 
         case "word":
-
-            return `
-            <div class="file-preview">
-
-            <i class="bi bi-file-earmark-word-fill file-icon word"></i>
-
-            </div>
-            `;
+            return `<div class="file-preview"><i class="bi bi-file-earmark-word-fill file-icon word"></i></div>`;
 
         case "excel":
-
-            return `
-            <div class="file-preview">
-
-            <i class="bi bi-file-earmark-excel-fill file-icon excel"></i>
-
-            </div>
-            `;
+            return `<div class="file-preview"><i class="bi bi-file-earmark-excel-fill file-icon excel"></i></div>`;
 
         case "ppt":
-
         case "pptx":
-
-            return `
-            <div class="file-preview">
-
-            <i class="bi bi-file-earmark-ppt-fill file-icon ppt"></i>
-
-            </div>
-            `;
+            return `<div class="file-preview"><i class="bi bi-file-earmark-ppt-fill file-icon ppt"></i></div>`;
 
         case "audio":
-
         case "mp3":
-
-            return `
-            <div class="file-preview">
-
-            <i class="bi bi-file-earmark-music-fill file-icon audio"></i>
-
-            </div>
-            `;
+            return `<div class="file-preview"><i class="bi bi-file-earmark-music-fill file-icon audio"></i></div>`;
 
         case "gambar":
-
         case "image":
-
         case "jpg":
-
         case "png":
-
-            return `
-            <img
-            src="${item.link}">
-            `;
+            return `<img src="${item.link}" alt="${item.judul}">`;
 
         case "video":
-
         case "mp4":
-
-            return `
-            <video muted>
-
-            <source src="${item.link}">
-
-            </video>
-            `;
+            return `<video muted><source src="${item.link}"></video>`;
 
         default:
-
-            return `
-            <div class="file-preview">
-
-            <i class="bi bi-file-earmark-fill file-icon"></i>
-
-            </div>
-            `;
-
+            return `<div class="file-preview"><i class="bi bi-file-earmark-fill file-icon"></i></div>`;
     }
-
 }
 
 /* ==========================================================
@@ -822,48 +461,278 @@ function createPreview(item){
 ========================================================== */
 
 function youtubeThumbnail(url){
-
     let id="";
-
     if(url.includes("youtu.be/")){
-
         id=url.split("youtu.be/")[1].split("?")[0];
-
-    }
-
-    else if(url.includes("watch?v=")){
-
+    } else if(url.includes("watch?v=")){
         id=url.split("watch?v=")[1].split("&")[0];
-
     }
-
     return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-
 }
 
 /* ==========================================================
-   UPDATE RESULT
+   ATTACH EVENT LISTENERS (UNTUK DYNAMIC ELEMENTS)
 ========================================================== */
 
-function updateTotalResult(){
+function attachCardEventListeners(){
+    // Preview button
+    $$(".previewBtn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const id = parseInt(e.target.closest(".previewBtn").dataset.id);
+            const item = App.gallery.find(i => i.id === id);
+            if(item) showPreview(item);
+        });
+    });
 
-    const total=$("#totalResult");
+    // Favorite button
+    $$(".favorite-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const id = parseInt(e.target.closest(".favorite-btn").dataset.id);
+            toggleFavorite(id);
+            e.target.closest(".favorite-btn").classList.toggle("active");
+        });
+    });
+}
 
-    if(total){
+/* ==========================================================
+   SHOW PREVIEW
+========================================================== */
 
-        total.textContent=App.filteredGallery.length;
+function showPreview(item){
+    const modal = new bootstrap.Modal($("#previewModal"));
+    
+    $("#previewTitle").textContent = item.judul;
+    $("#previewAuthor").textContent = `${item.pembuat} • ${item.status}`;
+    $("#previewDescription").textContent = item.deskripsi;
 
+    const container = $("#previewContainer");
+    container.innerHTML = "";
+
+    if(item.jenis.toLowerCase() === "youtube"){
+        const videoId = item.link.includes("youtu.be/") 
+            ? item.link.split("youtu.be/")[1].split("?")[0]
+            : item.link.split("watch?v=")[1].split("&")[0];
+        
+        container.innerHTML = `
+            <iframe width="100%" height="600" 
+                src="https://www.youtube.com/embed/${videoId}" 
+                frameborder="0" allowfullscreen></iframe>
+        `;
+    } else if(item.jenis.toLowerCase() === "pdf"){
+        container.innerHTML = `
+            <embed src="${item.link}" type="application/pdf" width="100%" height="600">
+        `;
+    } else if(["gambar", "image", "jpg", "png"].includes(item.jenis.toLowerCase())){
+        container.innerHTML = `<img src="${item.link}" style="max-width: 100%; height: auto;">`;
+    } else if(["audio", "mp3"].includes(item.jenis.toLowerCase())){
+        container.innerHTML = `<audio controls style="width: 100%;"><source src="${item.link}"></audio>`;
+    } else {
+        container.innerHTML = `<p>Preview tidak tersedia untuk tipe file ini</p>`;
     }
 
+    modal.show();
 }
 
 /* ==========================================================
-   START
+   FAVORITE TOGGLE
 ========================================================== */
 
-document.addEventListener("DOMContentLoaded",()=>{
+function toggleFavorite(id){
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    
+    if(favorites.includes(id)){
+        favorites = favorites.filter(fav => fav !== id);
+    } else {
+        favorites.push(id);
+    }
+    
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+}
 
-    loadGallery();
+/* ==========================================================
+   POPULATE FILTERS
+========================================================== */
 
-});
+function populateFilters(){
+    // Tahun
+    const years = [...new Set(App.gallery.map(item => item.tahun))].sort((a, b) => b - a);
+    const tahunSelect = $("#tahunFilter");
+    if(tahunSelect){
+        years.forEach(year => {
+            const option = document.createElement("option");
+            option.value = year;
+            option.textContent = year;
+            tahunSelect.appendChild(option);
+        });
+    }
 
+    // Mata Pelajaran
+    const subjects = [...new Set(App.gallery.map(item => item.mapel))].sort();
+    const mapelSelect = $("#mapelFilter");
+    if(mapelSelect){
+        subjects.forEach(subject => {
+            const option = document.createElement("option");
+            option.value = subject;
+            option.textContent = subject;
+            mapelSelect.appendChild(option);
+        });
+    }
+}
+
+/* ==========================================================
+   INIT SEARCH & FILTER
+========================================================== */
+
+function initSearch(){
+    const searchInput = $("#searchInput");
+    if(!searchInput) return;
+
+    searchInput.addEventListener("input", applyFilters);
+}
+
+function initFilterEvents(){
+    const filterChips = $$(".filter-chip");
+    const tahunFilter = $("#tahunFilter");
+    const mapelFilter = $("#mapelFilter");
+    const mediaFilter = $("#mediaFilter");
+    const sortFilter = $("#sortFilter");
+    const resetBtn = $("#resetFilter");
+    const loadMoreBtn = $("#loadMore");
+
+    filterChips.forEach(chip => {
+        chip.addEventListener("click", (e) => {
+            filterChips.forEach(c => c.classList.remove("active"));
+            e.target.classList.add("active");
+            App.currentFilter = e.target.dataset.filter;
+            App.currentPage = 1;
+            applyFilters();
+        });
+    });
+
+    tahunFilter?.addEventListener("change", applyFilters);
+    mapelFilter?.addEventListener("change", applyFilters);
+    mediaFilter?.addEventListener("change", applyFilters);
+    sortFilter?.addEventListener("change", applyFilters);
+
+    resetBtn?.addEventListener("click", () => {
+        $("#searchInput").value = "";
+        filterChips.forEach(chip => {
+            chip.classList.toggle("active", chip.dataset.filter === "all");
+        });
+        tahunFilter.value = "";
+        mapelFilter.value = "";
+        mediaFilter.value = "";
+        sortFilter.value = "terbaru";
+        App.currentFilter = "all";
+        App.currentPage = 1;
+        applyFilters();
+    });
+
+    loadMoreBtn?.addEventListener("click", () => {
+        App.currentPage++;
+        const start = (App.currentPage - 1) * App.itemsPerPage;
+        const newItems = App.filteredGallery.slice(start, start + App.itemsPerPage);
+        
+        if(newItems.length > 0){
+            const container = $("#galleryContainer");
+            const html = newItems.map(item => createGalleryCard(item)).join("");
+            container.innerHTML += html;
+            attachCardEventListeners();
+        } else {
+            loadMoreBtn.disabled = true;
+            loadMoreBtn.textContent = "Tidak ada karya lagi";
+        }
+    });
+}
+
+/* ==========================================================
+   APPLY FILTERS
+========================================================== */
+
+function applyFilters(){
+    let filtered = [...App.gallery];
+
+    // Search
+    const searchTerm = $("#searchInput")?.value.toLowerCase() || "";
+    if(searchTerm){
+        filtered = filtered.filter(item =>
+            item.judul.toLowerCase().includes(searchTerm) ||
+            item.pembuat.toLowerCase().includes(searchTerm) ||
+            item.mapel.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    // Filter Status/Jenis
+    if(App.currentFilter !== "all"){
+        if(["Siswa", "Guru"].includes(App.currentFilter)){
+            filtered = filtered.filter(item => item.status === App.currentFilter);
+        } else {
+            filtered = filtered.filter(item => item.jenis.toLowerCase() === App.currentFilter.toLowerCase());
+        }
+    }
+
+    // Filter Tahun
+    const tahun = $("#tahunFilter")?.value;
+    if(tahun){
+        filtered = filtered.filter(item => item.tahun == tahun);
+    }
+
+    // Filter Mapel
+    const mapel = $("#mapelFilter")?.value;
+    if(mapel){
+        filtered = filtered.filter(item => item.mapel === mapel);
+    }
+
+    // Filter Media
+    const media = $("#mediaFilter")?.value;
+    if(media){
+        filtered = filtered.filter(item => item.jenis.toLowerCase() === media.toLowerCase());
+    }
+
+    // Sort
+    const sort = $("#sortFilter")?.value || "terbaru";
+    switch(sort){
+        case "terbaru":
+            filtered.sort((a, b) => b.tahun - a.tahun);
+            break;
+        case "rating":
+            filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+            break;
+        case "nama":
+            filtered.sort((a, b) => a.judul.localeCompare(b.judul));
+            break;
+    }
+
+    App.filteredGallery = filtered;
+    App.currentPage = 1;
+
+    // Show first page only
+    const firstPage = filtered.slice(0, App.itemsPerPage);
+    renderGallery(firstPage);
+
+    // Update load more button
+    const loadMoreBtn = $("#loadMore");
+    if(loadMoreBtn){
+        loadMoreBtn.disabled = filtered.length <= App.itemsPerPage;
+        loadMoreBtn.textContent = filtered.length <= App.itemsPerPage ? "Tidak ada karya lagi" : "Muat Karya Lainnya";
+    }
+}
+
+/* ==========================================================
+   UPDATE STATISTICS
+========================================================== */
+
+function updateStatistics(){
+    $("#jumlahKarya").textContent = App.gallery.length;
+    
+    const videos = App.gallery.filter(item => item.jenis.toLowerCase() === "youtube").length;
+    $("#jumlahVideo").textContent = videos;
+    
+    const dokumen = App.gallery.filter(item => ["pdf", "word", "ppt", "pptx"].includes(item.jenis.toLowerCase())).length;
+    $("#jumlahDokumen").textContent = dokumen;
+    
+    const creators = [...new Set(App.gallery.map(item => item.pembuat))].length;
+    $("#jumlahPengguna").textContent = creators;
+}
+
+console.log("✅ script.js Loaded Successfully");
