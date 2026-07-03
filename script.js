@@ -1,13 +1,12 @@
-```javascript
 /*==========================
 KONFIGURASI
-==========================*/
+==========================
 const CONFIG={
 WEBAPP_URL:"https://script.google.com/macros/s/ISI_WEBAPP_URL/exec",
 ACCESS_CODE:"SMKN1SANDEN2026",
 ITEM_PER_LOAD:9
 };
-
+*/
 let galleryData=[];
 let filteredData=[];
 let currentPage=1;
