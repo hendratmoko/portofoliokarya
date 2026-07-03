@@ -2,7 +2,7 @@
 KONFIGURASI
 ========================== */
 const CONFIG={
-WEBAPP_URL:"https://script.google.com/macros/s/AKfycbxEVlFNm4PswXyyeFYwZhVKonoDHkIDU1Ai11ngPRxs9mWkSlTEYPDH6Qszh1XSpUOEfQ/exec",
+WEBAPP_URL:"https://script.google.com/macros/s/AKfycbwA_z7sZqWCFFcM2xUp2yoLwoqiYQ_AZNDUZOvVV59yj6KBOWNZbpGMt5ABgvXUpypjkQ/exec",
 ACCESS_CODE:"AAA",
 ITEM_PER_LOAD:9
 };
