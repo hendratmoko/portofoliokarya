@@ -1,8 +1,8 @@
 /*==========================
-KONFIGURASI
+KONFIGURASI Lybra account
 ========================== */
 const CONFIG={
-WEBAPP_URL:"https://script.google.com/macros/s/AKfycbwA_z7sZqWCFFcM2xUp2yoLwoqiYQ_AZNDUZOvVV59yj6KBOWNZbpGMt5ABgvXUpypjkQ/exec",
+WEBAPP_URL:"https://script.google.com/macros/s/AKfycbxkCegAijWtjx7qUziGmWsBQun8WMgG5O9rwnGWCPGZV7JoDodHvVC0t1Ky7KYoitZ4/exec",
 ACCESS_CODE:"AAA",
 ITEM_PER_LOAD:9
 };
