@@ -1602,7 +1602,24 @@ const result=await response.json();
 showToast(result.message);
 loadGallery();
 }
-
+/*==========================
+EDIT DATA
+==========================*/
+function editData(id){
+const data=galleryData.find(x=>x.id===id);
+if(!data)return;
+title.value=data.title;
+description.value=data.description;
+category.value=data.category;
+link.value=data.link;
+year.value=data.year;
+subject.value=data.subject;
+author.value=data.author;
+whatsappNumber.value=data.whatsappNumber;
+createCertificate.value=data.certificate;
+visibleToggle.checked=String(data.visible)=="true";
+btnSubmit.onclick=()=>updateData(id);
+}
 /*==========================
 Hapus Data
 ==========================*/
