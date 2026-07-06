@@ -275,11 +275,11 @@ throw new Error("HTTP "+response.status);
 const data=await response.json();
 
 galleryData=Array.isArray(data)?data:[];
-
+filteredData=[...galleryData];
+populateFilter();
 buildStatistic();
-
 buildGallery();
-
+toggleLoadMore();
 hideLoader();
 
 }catch(error){
