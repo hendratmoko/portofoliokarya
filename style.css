@@ -209,13 +209,16 @@ NAVBAR
 .navbar{
 padding:12px 0;
 transition:.35s;
+background:rgba(15,23,42,.88);
+backdrop-filter:blur(15px);
+border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .navbar.scrolled{
 padding:8px 0;
 box-shadow:var(--shadow);
-background:var(--glass);
-backdrop-filter:blur(20px);
+background:rgba(15,23,42,.95);
+backdrop-filter:blur(18px);
 }
 
 .navbar-brand img{
@@ -226,24 +229,24 @@ box-shadow:var(--shadow);
 .navbar-brand h5{
 font-size:1.1rem;
 font-weight:700;
-color:var(--text);
+color:#fff;
 }
 
 .navbar-brand small{
 font-size:.8rem;
-color:var(--text2);
+color:rgba(255,255,255,.75);
 }
 
 .nav-link{
-font-weight:500;
+font-weight:600;
 margin-left:10px;
-color:var(--text)!important;
+color:#fff!important;
 position:relative;
 transition:.3s;
 }
 
 .nav-link:hover{
-color:var(--primary)!important;
+color:#38bdf8!important;
 }
 
 .nav-link::after{
@@ -268,23 +271,32 @@ border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-background:var(--card);
-color:var(--primary);
-border:1px solid var(--border);
-box-shadow:var(--shadow);
+background:rgba(255,255,255,.08);
+color:#fff;
+border:1px solid rgba(255,255,255,.12);
+transition:.3s;
 }
 
 .icon-btn:hover{
-background:var(--primary);
+background:#2563eb;
 color:#fff;
 transform:translateY(-2px);
+box-shadow:0 8px 18px rgba(37,99,235,.35);
 }
 
 #btnAdmin{
 border-radius:30px;
 padding:8px 18px;
 font-weight:600;
-box-shadow:var(--shadow);
+background:#2563eb;
+color:#fff;
+border:none;
+transition:.3s;
+}
+
+#btnAdmin:hover{
+background:#1d4ed8;
+transform:translateY(-2px);
 }
 
 .navbar-toggler{
