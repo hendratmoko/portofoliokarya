@@ -262,7 +262,7 @@ async function loadGallery(){
 
 try{
 
-showLoader();
+showLoading();
 
 const response=await fetch(CONFIG.WEBAPP_URL);
 console.log(response.status);
