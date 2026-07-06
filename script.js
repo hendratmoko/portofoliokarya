@@ -285,17 +285,17 @@ buildGallery();
 toggleLoadMore();
 hideLoader();
 
-}catch(error){
+}
+catch(error){
 
 console.error(error);
 
-hideLoader();
+hideLoading();
 
-showToast("Gagal mengambil data.");
-
-}
+showToast(error.message,"error");
 
 }
+
 
 /*==========================
 STATISTIK
