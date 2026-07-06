@@ -996,7 +996,8 @@ FORM
 .form-select{
 background:var(--card);
 border:1px solid var(--border);
-color:var(--text);
+color:#0d6efd;
+/*color:var(--text);*/
 border-radius:12px;
 padding:12px 15px;
 }
@@ -1006,7 +1007,8 @@ padding:12px 15px;
 border-color:var(--primary);
 box-shadow:0 0 0 .2rem rgba(37,99,235,.15);
 background:var(--card);
-color:var(--text);
+color:#0d6efd;
+/*color:var(--text);*/
 }
 
 textarea.form-control{
