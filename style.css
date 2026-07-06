@@ -208,6 +208,7 @@ NAVBAR
 ==========================*/
 .navbar{
 padding:12px 0;
+margin-top:38px;
 transition:.35s;
 background:rgba(15,23,42,.88);
 backdrop-filter:blur(15px);
@@ -308,13 +309,54 @@ box-shadow:none!important;
 box-shadow:none;
 }
 
+/*==========================
+TOP INFO BAR
+==========================*/
+.top-info{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:38px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+background:linear-gradient(90deg,#2563eb,#1d4ed8);
+color:#fff;
+font-size:.9rem;
+font-weight:600;
+z-index:1055;
+}
+
+.top-info i{
+margin-right:6px;
+color:#fbbf24;
+}
+
+.top-left,
+.top-right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+[data-theme="dark"] .top-info{
+background:linear-gradient(90deg,#020617,#1e3a8a);
+color:#fff;
+}
+
+body.light .top-info{
+background:linear-gradient(90deg,#2563eb,#60a5fa);
+color:#fff;
+}
 
 /*==========================
 HERO
 ==========================*/
 .hero{
 min-height:100vh;
-padding:160px 0 90px;
+padding:195px 0 90px;
 display:flex;
 align-items:center;
 }
