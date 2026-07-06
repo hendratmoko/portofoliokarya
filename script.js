@@ -260,35 +260,35 @@ LOAD DATA GOOGLE SHEETS
 ==========================*/
 async function loadGallery(){
 
-showLoading();
-
 try{
+
+showLoader();
 
 const response=await fetch(CONFIG.WEBAPP_URL);
 
-const result=await response.json();
+if(!response.ok){
 
-galleryData=result.filter(item=>String(item.visible).toLowerCase()=="true");
+throw new Error("HTTP "+response.status);
 
-filteredData=[...galleryData];
+}
+
+const data=await response.json();
+
+galleryData=Array.isArray(data)?data:[];
 
 buildStatistic();
 
 buildGallery();
 
-populateFilter();
-
-hideLoading();
-
-showToast("Data galeri berhasil dimuat.");
+hideLoader();
 
 }catch(error){
 
-hideLoading();
-
 console.error(error);
 
-showToast("Gagal mengambil data.","error");
+hideLoader();
+
+showToast("Gagal mengambil data.");
 
 }
 
