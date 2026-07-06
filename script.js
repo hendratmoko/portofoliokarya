@@ -184,7 +184,7 @@ populateFilter();
 buildStatistic();
 buildGallery();
 toggleLoadMore();
-hideLoader();
+hideLoading();
 }
 catch(error){
 console.error(error);
