@@ -1532,7 +1532,7 @@ btnSubmit.disabled=false;
 if(result.status==="success"){
 
 showSuccess(result.message||"Data berhasil disimpan.");
-
+payload.id=result.id;
 galleryData.unshift(payload);
 
 filteredData=[...galleryData];
