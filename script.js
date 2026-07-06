@@ -1929,6 +1929,7 @@ showToast("Sistem siap digunakan.");
 /*==========================
 KALENDER JAM
 ==========================*/
+document.addEventListener("DOMContentLoaded",()=>{
 function updateDateTime(){
 const now=new Date();
 const tanggal=now.toLocaleDateString("id-ID",{
@@ -1949,3 +1950,4 @@ if(clock)clock.textContent=jam;
 }
 updateDateTime();
 setInterval(updateDateTime,1000);
+});
