@@ -1537,7 +1537,7 @@ filteredData=[...galleryData];
 buildStatistic();
 
 buildGallery();
-
+showToast();
 updateDashboard();
 
 if(createCertificate.value==="yes"){
