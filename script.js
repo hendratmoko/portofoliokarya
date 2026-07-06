@@ -967,14 +967,14 @@ visible:visibleToggle.checked,
 rating:5,
 view:0
 };
-
 try{
-const response=await fetch(CONFIG.WEBAPP_URL,{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify(payload)
+const formData = new FormData();
+for(const key in payload){
+    formData.append(key, payload[key]);
+}
+const response = await fetch(CONFIG.WEBAPP_URL,{
+    method:"POST",
+    body:formData
 });
 const result=await response.json();
 hideLoading();
