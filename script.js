@@ -2,7 +2,7 @@
 KONFIGURASI Lybra account
 ========================== */
 const CONFIG={
-WEBAPP_URL:"https://script.google.com/macros/s/AKfycbxkCegAijWtjx7qUziGmWsBQun8WMgG5O9rwnGWCPGZV7JoDodHvVC0t1Ky7KYoitZ4/exec",
+WEBAPP_URL:"https://script.google.com/macros/s/AKfycbzsRMXZ9SWvVMrgGEkNN3WzDraPKP9TgUqA6TdMhk9iBZn25AZ8_pLSphq_wHziO2PnSg/exec",
 ACCESS_CODE:"AAA",
 ITEM_PER_LOAD:9
 };
