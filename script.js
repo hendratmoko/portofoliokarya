@@ -1919,15 +1919,33 @@ console.log("[Gallery]",...arguments);
 FINISH
 ==========================*/
 window.addEventListener("beforeunload",()=>{
-
 console.log("Application Closed");
-
 });
-
 document.addEventListener("DOMContentLoaded",()=>{
-
 log("Gallery System Ready");
-
 showToast("Sistem siap digunakan.");
-
 });
+
+/*==========================
+KALENDER JAM
+==========================*/
+function updateDateTime(){
+const now=new Date();
+const tanggal=now.toLocaleDateString("id-ID",{
+weekday:"long",
+day:"2-digit",
+month:"long",
+year:"numeric"
+});
+const jam=now.toLocaleTimeString("id-ID",{
+hour:"2-digit",
+minute:"2-digit",
+second:"2-digit"
+});
+const date=document.getElementById("todayDate");
+const clock=document.getElementById("digitalClock");
+if(date)date.textContent=tanggal;
+if(clock)clock.textContent=jam;
+}
+updateDateTime();
+setInterval(updateDateTime,1000);
