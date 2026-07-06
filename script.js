@@ -1536,7 +1536,7 @@ filteredData=[...galleryData];
 buildStatistic();
 
 buildGallery();
-showToast();
+showToast("Data berhasil disimpan.");
 updateDashboard();
 
 if(createCertificate.value==="yes"){
