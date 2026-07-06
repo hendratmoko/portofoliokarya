@@ -998,13 +998,14 @@ resetForm();
 }else{
 showError(result.message||"Gagal menyimpan data.");
 }
-}catch(error){
-console.error(error);
-hideLoading();
-btnSubmit.disabled=false;
-showError("Terjadi kesalahan koneksi.");
 }
-}
+catch(error){
+    console.error("ERROR:", error);
+    alert(error);
+    hideLoading();
+    btnSubmit.disabled=false;
+    showError("Terjadi kesalahan koneksi.");
+}}
 /*==========================
 UPDATE DATA
 ==========================*/
