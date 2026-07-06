@@ -6,7 +6,7 @@ const CONFIG={
 /*==========================
 GOOGLE APPS SCRIPT
 ==========================*/
-WEBAPP_URL:"https://script.google.com/macros/s/AKfycbzBMjywz48ROgt590PjaFIygSQ1LVCikhes7AJECbnihzAgQ87S4uXr5I_dkN6Q2cxwBw/exec",
+WEBAPP_URL:"https://script.google.com/macros/s/AKfycbxMgVuBdoiD13vNlLrhUmIe-WtU9jCHU1BXuuv1wwDR3tSzo20pE31rJAjVoHr5g3V3Lg/exec",
 
 /*==========================
 GOOGLE SHEET
