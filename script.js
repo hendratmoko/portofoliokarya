@@ -265,6 +265,9 @@ try{
 showLoader();
 
 const response=await fetch(CONFIG.WEBAPP_URL);
+console.log(response.status);
+const data=await response.json();
+console.log(data);
 
 if(!response.ok){
 
