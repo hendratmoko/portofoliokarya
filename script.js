@@ -40,13 +40,13 @@ loader.style.visibility="hidden";
 /*==========================
 LOADING OVERLAY
 ==========================*/
-function showLoading();
-/*{loadingOverlay.classList.remove("d-none");
-}*/
+function showLoading(){
+loadingOverlay.classList.remove("d-none");
+}
 
-function hideLoading();
-/*{loadingOverlay.classList.add("d-none");
-}*/
+function hideLoading(){
+loadingOverlay.classList.add("d-none");
+}
 
 /*==========================
 TOAST
