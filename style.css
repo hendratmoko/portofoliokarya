@@ -1067,6 +1067,10 @@ border-color:var(--border);
 /*==========================
 BACK TO TOP
 ==========================*/
+.back-to-top{
+z-index:99999;
+}
+
 #backToTop{
 position:fixed;
 right:25px;
