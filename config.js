@@ -16,7 +16,7 @@ SHEET_NAME:"GaleriKarya",
 /*==========================
 LOGIN ADMIN
 ==========================*/
-ACCESS_CODE:"SMKN1SANDEN2026",
+ACCESS_CODE:"AAA",
 
 /*==========================
 GALERI
