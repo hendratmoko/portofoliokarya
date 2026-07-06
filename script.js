@@ -976,7 +976,10 @@ const response = await fetch(CONFIG.WEBAPP_URL,{
     method:"POST",
     body:formData
 });
-const result=await response.json();
+console.log("Status :", response.status);
+const text = await response.text();
+console.log("Response :", text);
+const result = JSON.parse(text);
 hideLoading();
 btnSubmit.disabled=false;
 if(result.status==="success"){
