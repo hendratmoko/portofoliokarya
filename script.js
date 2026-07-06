@@ -325,7 +325,7 @@ new Set(galleryData.map(x=>x.author)).size
 BUILD GALLERY
 ==========================*/
 function buildGallery(){
-
+if(!filteredData.length){filteredData=[...galleryData];}
 const container=document.getElementById("galleryContainer");
 
 container.innerHTML="";
