@@ -15,9 +15,6 @@ const loadingOverlay=document.getElementById("loadingOverlay");
 const toastElement=document.getElementById("liveToast");
 const toastMessage=document.getElementById("toastMessage");
 const toast=new bootstrap.Toast(toastElement);
-const USER = {token: null,
-    role: "guest",     // guest | guru | siswa | admin
-    name: ""};
 /*==========================
 LOADER
 ==========================*/
@@ -804,57 +801,21 @@ loginAdmin();
 }
 });
 function loginAdmin(){
-
-const code = accessCode.value.trim();
-
+const code=accessCode.value.trim();
 if(code===""){
-    loginMsg.innerHTML="Masukkan Token.";
-    return;
+loginMsg.innerHTML="Masukkan kode akses.";
+return;
 }
-
-/* ADMIN */
-
-if(code===CONFIG.ACCESS_CODE){
-
-    USER.role="admin";
-    USER.name="Administrator";
-
-    saveLogin();
-    isLoggedIn=true;
-
-    adminModal.hide();
-    showDashboard();
-    buildGallery();
-
-    showToast("Login Admin berhasil.");
-
-    return;
+if(code!==CONFIG.ACCESS_CODE){
+loginMsg.innerHTML="Kode akses salah.";
+showToast("Kode akses salah.","error");
+return;
 }
-
-/* GURU / SISWA */
-
-const akun = CONFIG.USER_TOKEN.find(x=>x.token===code);
-
-if(!akun){
-
-    loginMsg.innerHTML="Token tidak ditemukan.";
-    showToast("Token salah.","error");
-    return;
-}
-
-USER.role=akun.role;
-USER.name=akun.name;
-
 saveLogin();
 isLoggedIn=true;
-
 adminModal.hide();
-
 showDashboard();
-
-buildGallery();
-
-showToast("Selamat datang "+akun.name);
+showToast("Login berhasil.");
 }
 /*==========================
 SHOW DASHBOARD
