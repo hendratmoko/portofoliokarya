@@ -1,505 +1,1242 @@
-<!doctype html>
-<html lang="id">
- <head><script src="/_sdk/telemetry_sdk.js"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galeri Unjuk Kerja - SMKN 1 Sanden</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-  <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['DM Sans', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
-  <style>
-        :root { --vh: 1vh; }
-        body { font-family: 'DM Sans', sans-serif; }
-        .page { display: none; }
-        .page.active { display: block; }
-        .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
-        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
-        .fade-in { animation: fadeIn 0.3s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .toast { position: fixed; bottom: 20px; right: 20px; z-index: 9999; animation: slideUp 0.3s ease; }
-        @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    </style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
- </head>
- <body data-template-id="__page-root" class="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300"><!-- Navigation -->
-  <nav data-template-id="nav-bar" class="canva-header sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-700">
-   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-     <div class="w-10 h-10 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-lg">
-      S1
-     </div>
-     <div>
-      <h1 data-template-id="nav-title" class="canva-text font-bold text-slate-900 dark:text-white text-lg leading-tight"></h1>
-      <p data-template-id="nav-subtitle" class="canva-text text-xs text-slate-500 dark:text-slate-400"></p>
-     </div>
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Galeri Karya | SMK Negeri 1 Sanden</title>
+
+    <meta name="description"
+        content="Galeri Karya Digital Guru dan Siswa SMK Negeri 1 Sanden">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="top-info">
+<div class="container d-flex justify-content-between align-items-center">
+<div class="top-left">
+<i class="bi bi-calendar-event-fill"></i>
+<span id="todayDate"></span>
+</div>
+<div class="top-right">
+<i class="bi bi-clock-fill"></i>
+<span id="digitalClock"></span>
+</div>
+</div>
+</div>    
+<!-- =========================================================
+LOADER
+========================================================= -->
+
+<div id="loader">
+
+    <div class="spinner-grow text-primary"></div>
+
+    <p class="mt-3">
+
+        Memuat Galeri...
+
+    </p>
+
+</div>
+
+<!-- =========================================================
+LOADING OVERLAY
+========================================================= -->
+<div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center d-none" style="background: rgba(0,0,0,0.3); z-index: 9999;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
     </div>
-    <div class="flex items-center gap-2"><button id="lang-toggle" class="px-2 py-1 text-xs font-semibold rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200" onclick="toggleLang()">EN</button> <button id="theme-toggle" class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300" onclick="toggleTheme()"> <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i> <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i> </button> <button class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 md:hidden" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"> <i data-lucide="menu" class="w-5 h-5"></i> </button>
-    </div>
-   </div><!-- Desktop nav -->
-   <div class="max-w-7xl mx-auto px-4 pb-2 hidden md:flex gap-1"><button onclick="navigate('gallery')" class="nav-link px-3 py-1.5 text-sm rounded-md font-medium text-slate-600 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/30" data-page="gallery"><span data-i18n="nav_gallery">Galeri</span></button> <button onclick="navigate('register')" class="nav-link px-3 py-1.5 text-sm rounded-md font-medium text-slate-600 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/30" data-page="register"><span data-i18n="nav_register">Daftar</span></button> <button onclick="navigate('login')" class="nav-link px-3 py-1.5 text-sm rounded-md font-medium text-slate-600 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/30" data-page="login"><span data-i18n="nav_login">Masuk</span></button> <button onclick="navigate('help')" class="nav-link px-3 py-1.5 text-sm rounded-md font-medium text-slate-600 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/30" data-page="help"><span data-i18n="nav_help">Bantuan</span></button>
-   </div><!-- Mobile menu -->
-   <div id="mobile-menu" class="hidden md:hidden px-4 pb-3 flex flex-col gap-1"><button onclick="navigate('gallery');document.getElementById('mobile-menu').classList.add('hidden')" class="text-left px-3 py-2 text-sm rounded-md text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav_gallery">Galeri</button> <button onclick="navigate('register');document.getElementById('mobile-menu').classList.add('hidden')" class="text-left px-3 py-2 text-sm rounded-md text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav_register">Daftar</button> <button onclick="navigate('login');document.getElementById('mobile-menu').classList.add('hidden')" class="text-left px-3 py-2 text-sm rounded-md text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav_login">Masuk</button> <button onclick="navigate('help');document.getElementById('mobile-menu').classList.add('hidden')" class="text-left px-3 py-2 text-sm rounded-md text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav_help">Bantuan</button>
-   </div>
-  </nav>
-  <main class="w-full"><!-- GALLERY PAGE -->
-   <section id="page-gallery" class="page active fade-in"><!-- Hero -->
-    <div class="relative overflow-hidden"><img data-template-id="hero-image" class="canva-image w-full h-56 md:h-72 object-cover" loading="lazy">
-     <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end">
-      <div class="p-6 md:p-10">
-       <h2 data-template-id="hero-title" class="canva-text text-white font-bold text-2xl md:text-4xl"></h2>
-       <p data-template-id="hero-desc" class="canva-text text-white/80 mt-1 text-sm md:text-base"></p>
-      </div>
-     </div>
-    </div><!-- Filters -->
-    <div class="max-w-7xl mx-auto px-4 py-4">
-     <div class="flex flex-wrap gap-2 items-center">
-      <div class="relative flex-1 min-w-[200px]"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i> <input id="search-input" type="text" placeholder="Cari nama, judul..." class="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 outline-none" oninput="filterGallery()">
-      </div><select id="filter-category" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200" onchange="filterGallery()"> <option value="">Semua Kategori</option> <option value="Siswa">Siswa</option> <option value="Guru">Guru</option> </select> <select id="filter-media" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200" onchange="filterGallery()"> <option value="">Semua Media</option> <option value="youtube">YouTube</option> <option value="drive">Google Drive</option> </select> <select id="filter-year" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200" onchange="filterGallery()"> <option value="">Semua Tahun</option> <option value="2026">2026</option> <option value="2025">2025</option> <option value="2024">2024</option> </select>
-     </div>
-    </div><!-- Gallery Grid -->
-    <div id="gallery-grid" class="max-w-7xl mx-auto px-4 pb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"><!-- Cards injected by JS -->
-    </div>
-    <div id="gallery-empty" class="hidden max-w-7xl mx-auto px-4 pb-10 text-center py-16"><img data-template-id="empty-state-img" class="canva-image w-48 h-48 mx-auto object-cover rounded-xl opacity-70" loading="lazy">
-     <p data-template-id="empty-state-text" class="canva-text mt-4 text-slate-500 dark:text-slate-400"></p>
-    </div>
-   </section><!-- REGISTER PAGE -->
-   <section id="page-register" class="page fade-in">
-    <div class="max-w-md mx-auto px-4 py-10">
-     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 md:p-8">
-      <h2 data-template-id="register-title" class="canva-text font-bold text-xl text-slate-900 dark:text-white text-center mb-1"></h2>
-      <p data-template-id="register-desc" class="canva-text text-sm text-slate-500 dark:text-slate-400 text-center mb-6"></p>
-      <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4">
-       <div><label for="reg-name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_name">Nama Lengkap</label> <input id="reg-name" type="text" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-       </div>
-       <div><label for="reg-status" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_status">Status</label> <select id="reg-status" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm"> <option value="Siswa">Siswa</option> <option value="Guru">Guru</option> </select>
-       </div>
-       <div><label for="reg-dept" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_dept">Jurusan / Mata Pelajaran</label> <input id="reg-dept" type="text" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-       </div>
-       <div><label for="reg-contact" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_contact">Email / No. HP</label> <input id="reg-contact" type="text" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-       </div><button type="submit" data-template-id="register-btn" class="canva-button w-full py-2.5 rounded-lg font-semibold text-sm transition-colors"></button>
-      </form>
-      <div id="register-result" class="hidden mt-5 p-4 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-center">
-       <p class="text-sm text-slate-600 dark:text-slate-300 mb-1" data-i18n="code_label">Kode Akses Anda:</p>
-       <p id="generated-code" class="text-2xl font-bold text-emerald-700 dark:text-emerald-400 tracking-widest"></p>
-       <p class="text-xs text-slate-500 dark:text-slate-400 mt-2" data-i18n="code_note">Simpan kode ini untuk masuk ke halaman backend.</p>
-      </div>
-     </div>
-    </div>
-   </section><!-- LOGIN PAGE -->
-   <section id="page-login" class="page fade-in">
-    <div class="max-w-md mx-auto px-4 py-10">
-     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 md:p-8">
-      <h2 data-template-id="login-title" class="canva-text font-bold text-xl text-slate-900 dark:text-white text-center mb-1"></h2>
-      <p data-template-id="login-desc" class="canva-text text-sm text-slate-500 dark:text-slate-400 text-center mb-6"></p>
-      <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
-       <div><label for="login-code" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_code">Kode Akses</label> <input id="login-code" type="text" required maxlength="10" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm tracking-widest text-center uppercase focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="ABC123">
-       </div><button type="submit" data-template-id="login-btn" class="canva-button w-full py-2.5 rounded-lg font-semibold text-sm transition-colors"></button>
-      </form>
-      <div id="login-error" class="hidden mt-3 p-3 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-sm text-center"></div>
-     </div>
-    </div>
-   </section><!-- BACKEND PAGE -->
-   <section id="page-backend" class="page fade-in">
-    <div class="max-w-2xl mx-auto px-4 py-10">
-     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 md:p-8">
-      <div class="flex items-center justify-between mb-6">
-       <div>
-        <h2 data-template-id="backend-title" class="canva-text font-bold text-xl text-slate-900 dark:text-white"></h2>
-        <p id="backend-user-info" class="text-sm text-slate-500 dark:text-slate-400 mt-0.5"></p>
-       </div><button onclick="handleLogout()" class="text-sm text-red-500 hover:text-red-700 font-medium" data-i18n="btn_logout">Keluar</button>
-      </div>
-      <form id="submit-form" onsubmit="handleSubmitWork(event)" class="space-y-4">
-       <div><label for="work-title" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_work_title">Judul Karya</label> <input id="work-title" type="text" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-       </div>
-       <div><label for="work-desc" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_work_desc">Deskripsi (alat, bahan, software, lama produksi, pengajar, dll)</label> <textarea id="work-desc" rows="4" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none resize-y"></textarea>
-       </div>
-       <div class="grid grid-cols-2 gap-3">
-        <div><label for="work-subject" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_subject">Mata Pelajaran</label> <input id="work-subject" type="text" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+</div>
+
+<!-- =========================================================
+BACKGROUND
+========================================================= -->
+
+<div class="bg-gradient"></div>
+
+<div class="circle circle1"></div>
+
+<div class="circle circle2"></div>
+
+<div class="circle circle3"></div>
+
+<!-- =========================================================
+NAVBAR
+========================================================= -->
+
+<nav class="navbar navbar-expand-lg fixed-top glass shadow-sm">
+
+    <div class="container">
+
+        <!-- Logo -->
+
+        <a class="navbar-brand d-flex align-items-center gap-3"
+            href="#">
+
+            <img src="assets/logo.jpg"
+                height="55">
+
+            <div>
+
+                <h5 class="fw-bold m-0">
+
+                    GALERI KARYA
+
+                </h5>
+
+                <small>
+
+                    SMK Negeri 1 Sanden
+
+                </small>
+
+            </div>
+
+        </a>
+
+        <!-- Toggle -->
+
+        <button class="navbar-toggler"
+
+            data-bs-toggle="collapse"
+
+            data-bs-target="#menu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <!-- Menu -->
+
+        <div class="collapse navbar-collapse"
+
+            id="menu">
+
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                        href="#gallery">
+
+                        Galeri
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                        href="#statistik">
+
+                        Statistik
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                        href="#tentang">
+
+                        Tentang
+
+                    </a>
+
+                </li>
+
+                <!-- ADMIN -->
+
+                <li class="nav-item ms-2">
+
+                    <button
+                        class="btn btn-outline-primary"
+
+                        id="btnAdmin">
+
+                        <i class="bi bi-shield-lock-fill"></i>
+
+                        Admin
+
+                    </button>
+
+                </li>
+
+                <!-- Refresh -->
+
+                <li class="nav-item ms-2">
+
+                    <button
+                        class="icon-btn"
+
+                        id="refreshGallery">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+
+                    </button>
+
+                </li>
+
+                <!-- Dark Mode -->
+
+                <li class="nav-item ms-2">
+
+                    <button
+                        class="icon-btn"
+
+                        id="themeToggle">
+
+                        <i class="bi bi-moon-stars"></i>
+
+                    </button>
+
+                </li>
+
+                <!-- Bantuan -->
+
+                <li class="nav-item ms-2">
+
+                    <button
+                        class="icon-btn"
+
+                        data-bs-toggle="modal"
+
+                        data-bs-target="#helpModal">
+
+                        <i class="bi bi-question-circle"></i>
+
+                    </button>
+
+                </li>
+
+            </ul>
+
         </div>
-        <div><label for="work-year" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_year">Tahun</label> <input id="work-year" type="number" value="2026" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-        </div>
-       </div>
-       <div><label for="work-link" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="label_link">Link (YouTube / Google Drive)</label> <input id="work-link" type="url" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="https://...">
-       </div>
-       <div class="flex items-center gap-2"><input id="work-publish" type="checkbox" checked class="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"> <label for="work-publish" class="text-sm text-slate-700 dark:text-slate-300" data-i18n="label_publish">Tampilkan di halaman publik</label>
-       </div><button type="submit" id="submit-work-btn" data-template-id="submit-btn" class="canva-button w-full py-2.5 rounded-lg font-semibold text-sm transition-colors"></button>
-      </form><!-- Certificate section -->
-      <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
-       <h3 data-template-id="cert-title" class="canva-text font-semibold text-slate-900 dark:text-white mb-2"></h3>
-       <p data-template-id="cert-desc" class="canva-text text-sm text-slate-500 dark:text-slate-400 mb-3"></p><button onclick="handlePrintCert()" data-template-id="cert-btn" class="canva-button px-4 py-2 rounded-lg font-medium text-sm"></button>
-      </div>
-     </div>
+
     </div>
-   </section><!-- HELP PAGE -->
-   <section id="page-help" class="page fade-in">
-    <div class="max-w-2xl mx-auto px-4 py-10">
-     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 md:p-8">
-      <h2 data-template-id="help-title" class="canva-text font-bold text-xl text-slate-900 dark:text-white mb-4"></h2>
-      <div class="space-y-5 text-sm text-slate-700 dark:text-slate-300">
-       <div>
-        <h3 data-template-id="help-yt-title" class="canva-text font-semibold text-base mb-2"></h3>
-        <ol data-template-id="help-yt-steps" class="canva-text list-decimal pl-5 space-y-1"></ol>
-       </div>
-       <div>
-        <h3 data-template-id="help-drive-title" class="canva-text font-semibold text-base mb-2"></h3>
-        <ol data-template-id="help-drive-steps" class="canva-text list-decimal pl-5 space-y-1"></ol>
-       </div>
-       <div>
-        <h3 data-template-id="help-sheets-title" class="canva-text font-semibold text-base mb-2"></h3>
-        <p data-template-id="help-sheets-desc" class="canva-text"></p>
-       </div>
-       <div class="mt-4 p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-        <h4 data-template-id="help-gas-title" class="canva-text font-semibold text-amber-800 dark:text-amber-300 mb-2"></h4>
-        <pre class="text-xs bg-slate-900 text-emerald-400 p-4 rounded-lg overflow-x-auto whitespace-pre-wrap"><code id="gas-code">// Google Apps Script - Galeri Unjuk Kerja SMKN 1 Sanden
-// Spreadsheet: https://docs.google.com/spreadsheets/d/1zILB3V4dl1f-7xjV_-WYoPQWvGNT8Xwqw0D52boogwk/
 
-const SS_ID = '1zILB3V4dl1f-7xjV_-WYoPQWvGNT8Xwqw0D52boogwk';
+</nav>
 
-function doPost(e) {
-  const data = JSON.parse(e.postData.contents);
-  const ss = SpreadsheetApp.openById(SS_ID);
+<!-- =========================================================
+HERO
+========================================================= -->
 
-  if (data.action === 'register') {
-    const sheet = ss.getSheetByName('Users') || ss.insertSheet('Users');
-    if (sheet.getLastRow() === 0) sheet.appendRow(['Nama','Status','Jurusan','Kontak','Kode','Tanggal']);
-    const code = generateCode(data.nama);
-    sheet.appendRow([data.nama, data.status, data.jurusan, data.kontak, code, new Date().toISOString()]);
-    return ContentService.createTextOutput(JSON.stringify({success:true, code})).setMimeType(ContentService.MimeType.JSON);
-  }
+<header class="hero">
 
-  if (data.action === 'login') {
-    const sheet = ss.getSheetByName('Users');
-    if (!sheet) return ContentService.createTextOutput(JSON.stringify({success:false})).setMimeType(ContentService.MimeType.JSON);
-    const rows = sheet.getDataRange().getValues();
-    const user = rows.find(r =&gt; r[4] === data.code);
-    if (user) return ContentService.createTextOutput(JSON.stringify({success:true, nama:user[0], status:user[1], jurusan:user[2]})).setMimeType(ContentService.MimeType.JSON);
-    return ContentService.createTextOutput(JSON.stringify({success:false})).setMimeType(ContentService.MimeType.JSON);
-  }
+    <div class="container">
 
-  if (data.action === 'submit') {
-    const sheet = ss.getSheetByName('Karya') || ss.insertSheet('Karya');
-    if (sheet.getLastRow() === 0) sheet.appendRow(['Judul','Deskripsi','Kategori','Mapel','Tahun','Link','Publish','Nama','Kode','Tanggal','Rating']);
-    sheet.appendRow([data.judul, data.deskripsi, data.kategori, data.mapel, data.tahun, data.link, data.publish, data.nama, data.kode, new Date().toISOString(), 0]);
-    return ContentService.createTextOutput(JSON.stringify({success:true})).setMimeType(ContentService.MimeType.JSON);
-  }
+        <div class="row align-items-center">
 
-  if (data.action === 'getWorks') {
-    const sheet = ss.getSheetByName('Karya');
-    if (!sheet || sheet.getLastRow() &lt; 2) return ContentService.createTextOutput(JSON.stringify({success:true, data:[]})).setMimeType(ContentService.MimeType.JSON);
-    const rows = sheet.getDataRange().getValues().slice(1);
-    const works = rows.filter(r =&gt; r[6] === true || r[6] === 'TRUE').map(r =&gt; ({judul:r[0],deskripsi:r[1],kategori:r[2],mapel:r[3],tahun:r[4],link:r[5],nama:r[7],tanggal:r[9],rating:r[10]}));
-    return ContentService.createTextOutput(JSON.stringify({success:true, data:works})).setMimeType(ContentService.MimeType.JSON);
-  }
-}
+            <div class="col-lg-6">
 
-function doGet(e) {
-  const ss = SpreadsheetApp.openById(SS_ID);
-  const sheet = ss.getSheetByName('Karya');
-  if (!sheet || sheet.getLastRow() &lt; 2) return ContentService.createTextOutput(JSON.stringify({success:true, data:[]})).setMimeType(ContentService.MimeType.JSON);
-  const rows = sheet.getDataRange().getValues().slice(1);
-  const works = rows.filter(r =&gt; r[6] === true || r[6] === 'TRUE').map(r =&gt; ({judul:r[0],deskripsi:r[1],kategori:r[2],mapel:r[3],tahun:r[4],link:r[5],nama:r[7],tanggal:r[9],rating:r[10]}));
-  return ContentService.createTextOutput(JSON.stringify({success:true, data:works})).setMimeType(ContentService.MimeType.JSON);
-}
+                <span class="badge bg-primary mb-3">
 
-function generateCode(nama) {
-  const parts = nama.trim().split(' ');
-  let prefix = '';
-  if (parts.length &gt;= 2) prefix = (parts[0][0] + parts[1][0] + parts[1][1]).toUpperCase();
-  else prefix = nama.substring(0, 3).toUpperCase();
-  const num = Math.floor(Math.random() * 900) + 100;
-  return prefix + num;
-}</code></pre>
-       </div>
-      </div>
-     </div>
-    </div>
-   </section>
-  </main><!-- Footer -->
-  <footer data-template-id="footer-section" class="canva-footer border-t border-slate-200 dark:border-slate-700 mt-10">
-   <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3">
-    <p data-template-id="footer-text" class="canva-text text-sm text-slate-500 dark:text-slate-400"></p>
-    <div class="flex gap-4"><button onclick="navigate('register')" class="text-sm text-emerald-600 dark:text-emerald-400 hover:underline font-medium" data-i18n="footer_register">Daftar</button> <button onclick="navigate('login')" class="text-sm text-emerald-600 dark:text-emerald-400 hover:underline font-medium" data-i18n="footer_login">Masuk Backend</button> <button onclick="navigate('help')" class="text-sm text-emerald-600 dark:text-emerald-400 hover:underline font-medium" data-i18n="footer_help">Bantuan</button>
-    </div>
-   </div>
-  </footer>
-  <script src="/_sdk/editing_sdk.js"></script>
-  <script>
-    // ============ CONFIG ============
-    // Replace with your deployed Google Apps Script Web App URL
-    const API_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+                    PORTAL DIGITAL
 
-    // ============ STATE ============
-    let currentLang = 'id';
-    let currentUser = null;
-    let allWorks = [];
+                </span>
 
-    // ============ i18n ============
-    const i18n = {
-        id: {
-            nav_gallery: 'Galeri', nav_register: 'Daftar', nav_login: 'Masuk', nav_help: 'Bantuan',
-            label_name: 'Nama Lengkap', label_status: 'Status', label_dept: 'Jurusan / Mata Pelajaran',
-            label_contact: 'Email / No. HP', label_code: 'Kode Akses',
-            code_label: 'Kode Akses Anda:', code_note: 'Simpan kode ini untuk masuk ke halaman backend.',
-            label_work_title: 'Judul Karya', label_work_desc: 'Deskripsi (alat, bahan, software, lama produksi, pengajar, dll)',
-            label_subject: 'Mata Pelajaran', label_year: 'Tahun', label_link: 'Link (YouTube / Google Drive)',
-            label_publish: 'Tampilkan di halaman publik', btn_logout: 'Keluar',
-            footer_register: 'Daftar', footer_login: 'Masuk Backend', footer_help: 'Bantuan',
-            login_error: 'Kode akses tidak valid. Silakan coba lagi.',
-            submit_success: 'Karya berhasil dikirim!', loading: 'Memproses...',
-            search_placeholder: 'Cari nama, judul...'
-        },
-        en: {
-            nav_gallery: 'Gallery', nav_register: 'Register', nav_login: 'Login', nav_help: 'Help',
-            label_name: 'Full Name', label_status: 'Status', label_dept: 'Department / Subject',
-            label_contact: 'Email / Phone', label_code: 'Access Code',
-            code_label: 'Your Access Code:', code_note: 'Save this code to access the backend.',
-            label_work_title: 'Work Title', label_work_desc: 'Description (tools, materials, software, duration, teacher, etc)',
-            label_subject: 'Subject', label_year: 'Year', label_link: 'Link (YouTube / Google Drive)',
-            label_publish: 'Show on public gallery', btn_logout: 'Logout',
-            footer_register: 'Register', footer_login: 'Backend Login', footer_help: 'Help',
-            login_error: 'Invalid access code. Please try again.',
-            submit_success: 'Work submitted successfully!', loading: 'Processing...',
-            search_placeholder: 'Search name, title...'
-        }
-    };
+                <h1>
 
-    function toggleLang() {
-        currentLang = currentLang === 'id' ? 'en' : 'id';
-        document.getElementById('lang-toggle').textContent = currentLang === 'id' ? 'EN' : 'ID';
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (i18n[currentLang][key]) el.textContent = i18n[currentLang][key];
-        });
-        document.getElementById('search-input').placeholder = i18n[currentLang].search_placeholder;
-    }
+                    Galeri Karya
 
-    // ============ THEME ============
-    function toggleTheme() {
-        document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    }
-    if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+                    <span class="text-primary">
 
-    // ============ NAVIGATION ============
-    function navigate(page) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        const target = document.getElementById('page-' + page);
-        if (target) { target.classList.add('active'); target.classList.add('fade-in'); }
-        document.querySelectorAll('.nav-link').forEach(l => {
-            l.classList.toggle('bg-emerald-100', l.dataset.page === page);
-            l.classList.toggle('dark:bg-emerald-900/40', l.dataset.page === page);
-            l.classList.toggle('text-emerald-700', l.dataset.page === page);
-        });
-        if (page === 'gallery') loadGallery();
-        window.scrollTo(0, 0);
-    }
+                        SMK Negeri 1 Sanden
 
-    // ============ GALLERY ============
-    function getMediaType(link) {
-        if (!link) return 'unknown';
-        if (link.includes('youtube.com') || link.includes('youtu.be')) return 'youtube';
-        return 'drive';
-    }
+                    </span>
 
-    function getYouTubeId(url) {
-        const m = url.match(/(?:youtu\.be\/|v=|\/embed\/)([^&?#]+)/);
-        return m ? m[1] : null;
-    }
+                </h1>
 
-    function getDriveIcon(link) {
-        const lower = link.toLowerCase();
-        if (lower.includes('.pdf')) return '📄';
-        if (lower.includes('.doc') || lower.includes('.docx')) return '📝';
-        if (lower.includes('.ppt') || lower.includes('.pptx')) return '📊';
-        if (lower.includes('.mp3') || lower.includes('.wav')) return '🎵';
-        if (lower.includes('.jpg') || lower.includes('.png') || lower.includes('.jpeg')) return '🖼️';
-        return '📁';
-    }
+                <p>
 
-    function renderStars(rating) {
-        const r = Math.round(rating || 0);
-        return '★'.repeat(Math.min(r, 5)) + '☆'.repeat(5 - Math.min(r, 5));
-    }
+                    Menampilkan karya terbaik guru dan siswa
+                    dalam bentuk video, PDF, Word,
+                    PowerPoint, gambar, audio,
+                    media pembelajaran interaktif,
+                    serta berbagai inovasi digital.
 
-    function renderCard(work) {
-        const type = getMediaType(work.link);
-        let mediaHtml = '';
-        if (type === 'youtube') {
-            const vid = getYouTubeId(work.link);
-            mediaHtml = vid ? `<img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg" alt="${work.judul}" class="w-full h-40 object-cover rounded-t-xl">` : `<div class="w-full h-40 bg-red-100 dark:bg-red-900/30 flex items-center justify-center rounded-t-xl"><i data-lucide="play-circle" class="w-12 h-12 text-red-500"></i></div>`;
-        } else {
-            mediaHtml = `<div class="w-full h-40 bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center rounded-t-xl"><span class="text-5xl">${getDriveIcon(work.link)}</span></div>`;
-        }
+                </p>
 
-        return `<div class="card-hover bg-white dark:bg-slate-800 rounded-xl shadow-md overflow-hidden border border-slate-100 dark:border-slate-700">
-            <a href="${work.link}" target="_blank" rel="noopener noreferrer">${mediaHtml}</a>
-            <div class="p-4">
-                <h3 class="font-semibold text-slate-900 dark:text-white text-sm line-clamp-1">${work.judul}</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${work.deskripsi}</p>
-                <div class="flex items-center justify-between mt-3">
-                    <span class="text-xs text-slate-500 dark:text-slate-400">${work.nama} · ${work.tahun}</span>
-                    <span class="text-amber-500 text-xs">${renderStars(work.rating)}</span>
+                <div class="hero-button mt-4">
+
+                    <a href="#gallery"
+
+                        class="btn btn-primary btn-lg">
+
+                        <i class="bi bi-grid-fill"></i>
+
+                        Lihat Galeri
+
+                    </a>
+
+                    <a href="#tentang"
+
+                        class="btn btn-outline-primary btn-lg">
+
+                        Tentang
+
+                    </a>
+
                 </div>
-                <div class="flex gap-1 mt-2">
-                    <span class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">${work.kategori}</span>
-                    <span class="px-2 py-0.5 text-[10px] rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${work.mapel}</span>
+
+            </div>
+
+            <div class="col-lg-6 text-center">
+
+                <img
+
+                    src="assets/hero.svg"
+
+                    class="img-fluid hero-image">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- =========================================================
+STATISTIK
+========================================================= -->
+
+<section
+    id="statistik"
+
+    class="container my-5">
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <i class="bi bi-collection-play-fill"></i>
+
+                <h2 id="jumlahKarya">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Jumlah Karya
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <i class="bi bi-camera-video-fill"></i>
+
+                <h2 id="jumlahVideo">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Video
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                <h2 id="jumlahDokumen">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Dokumen
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <i class="bi bi-people-fill"></i>
+
+                <h2 id="jumlahPengguna">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Guru & Siswa
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================================
+SEARCH & FILTER
+========================================================= -->
+
+<section class="container my-5">
+
+    <div class="search-panel glass">
+
+        <div class="row g-3">
+
+            <!-- Search -->
+
+            <div class="col-lg-5">
+
+                <div class="search-box">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+
+                        id="searchInput"
+
+                        type="text"
+
+                        class="form-control"
+
+                        placeholder="Cari judul, pembuat, mapel...">
+
+                </div>
+
+            </div>
+
+            <!-- Filter Cepat -->
+
+            <div class="col-lg-7">
+
+                <div class="filter-group">
+
+                    <button class="filter-chip active"
+                        data-filter="all">
+
+                        Semua
+
+                    </button>
+
+                    <button class="filter-chip"
+                        data-filter="Siswa">
+
+                        Siswa
+
+                    </button>
+
+                    <button class="filter-chip"
+                        data-filter="Guru">
+
+                        Guru
+
+                    </button>
+
+                    <button class="filter-chip"
+                        data-filter="youtube">
+
+                        Video
+
+                    </button>
+
+                    <button class="filter-chip"
+                        data-filter="pdf">
+
+                        PDF
+
+                    </button>
+
+                    <button class="filter-chip"
+                        data-filter="gambar">
+
+                        Gambar
+
+                    </button>
+
+                    <button class="filter-chip"
+                        data-filter="audio">
+
+                        Audio
+
+                    </button>
+
+                    <button class="filter-chip"
+                        data-filter="ppt">
+
+                        PPT
+
+                    </button>
+
+                    <button class="filter-chip"
+                        data-filter="word">
+
+                        Word
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Filter Lanjutan -->
+
+        <div class="row mt-4">
+
+            <div class="col-lg-3">
+
+                <select
+                    id="tahunFilter"
+
+                    class="form-select">
+
+                    <option value="">
+
+                        Semua Tahun
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <select
+                    id="mapelFilter"
+
+                    class="form-select">
+
+                    <option value="">
+
+                        Semua Mata Pelajaran
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <select
+                    id="mediaFilter"
+
+                    class="form-select">
+
+                    <option value="">
+
+                        Semua Media
+
+                    </option>
+
+                    <option>YouTube</option>
+
+                    <option>PDF</option>
+
+                    <option>Word</option>
+
+                    <option>PPT</option>
+
+                    <option>Spreadsheet</option>
+
+                    <option>Audio</option>
+
+                    <option>Gambar</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <select
+                    id="sortFilter"
+
+                    class="form-select">
+
+                    <option value="terbaru">
+
+                        Terbaru
+
+                    </option>
+
+                    <option value="rating">
+
+                        Rating Tertinggi
+
+                    </option>
+
+                    <option value="populer">
+
+                        Paling Populer
+
+                    </option>
+
+                    <option value="nama">
+
+                        Nama A-Z
+
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================================
+GALERI
+========================================================= -->
+
+<section class="container" id="gallery">
+
+    <div class="section-title text-center mb-5">
+
+        <h2>Galeri Karya</h2>
+
+        <p>Klik salah satu karya untuk melihat preview.</p>
+
+    </div>
+
+    <div class="row g-4" id="galleryContainer">
+        <!-- Card dibuat otomatis oleh script.js -->
+    </div>
+
+</section>
+
+<!-- =========================================================
+SKELETON LOADING
+========================================================= -->
+
+<div id="loadingGallery" class="container">
+
+    <div class="row g-4">
+
+        <div class="col-xl-4 col-lg-4 col-md-6">
+            <div class="gallery-card skeleton-card">
+                <div class="skeleton skeleton-image"></div>
+                <div class="card-content">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                    <div class="creator">
+                        <div class="skeleton skeleton-avatar"></div>
+                        <div>
+                            <div class="skeleton skeleton-name"></div>
+                            <div class="skeleton skeleton-role"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton skeleton-button"></div>
                 </div>
             </div>
-        </div>`;
-    }
+        </div>
 
-    function filterGallery() {
-        const search = document.getElementById('search-input').value.toLowerCase();
-        const cat = document.getElementById('filter-category').value;
-        const media = document.getElementById('filter-media').value;
-        const year = document.getElementById('filter-year').value;
+        <div class="col-xl-4 col-lg-4 col-md-6">
+            <div class="gallery-card skeleton-card">
+                <div class="skeleton skeleton-image"></div>
+                <div class="card-content">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                    <div class="creator">
+                        <div class="skeleton skeleton-avatar"></div>
+                        <div>
+                            <div class="skeleton skeleton-name"></div>
+                            <div class="skeleton skeleton-role"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+            </div>
+        </div>
 
-        const filtered = allWorks.filter(w => {
-            if (search && !w.judul.toLowerCase().includes(search) && !w.nama.toLowerCase().includes(search)) return false;
-            if (cat && w.kategori !== cat) return false;
-            if (media && getMediaType(w.link) !== media) return false;
-            if (year && String(w.tahun) !== year) return false;
-            return true;
-        });
+        <div class="col-xl-4 col-lg-4 col-md-6">
+            <div class="gallery-card skeleton-card">
+                <div class="skeleton skeleton-image"></div>
+                <div class="card-content">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                    <div class="creator">
+                        <div class="skeleton skeleton-avatar"></div>
+                        <div>
+                            <div class="skeleton skeleton-name"></div>
+                            <div class="skeleton skeleton-role"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+            </div>
+        </div>
 
-        const grid = document.getElementById('gallery-grid');
-        const empty = document.getElementById('gallery-empty');
-        if (filtered.length === 0) { grid.innerHTML = ''; empty.classList.remove('hidden'); }
-        else { empty.classList.add('hidden'); grid.innerHTML = filtered.map(renderCard).join(''); }
-        lucide.createIcons();
-    }
+    </div>
 
-    async function loadGallery() {
-        // Demo data for preview (replace with API call in production)
-        if (allWorks.length === 0) {
-            allWorks = [
-                { judul: 'Animasi 3D Rumah Adat', deskripsi: 'Dibuat dengan Blender 3.6, waktu produksi 2 minggu. Tugas Desain Grafis semester 4.', kategori: 'Siswa', mapel: 'Desain Grafis', tahun: 2026, link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', nama: 'Andi Pratama', tanggal: '2026-06-01', rating: 4 },
-                { judul: 'Laporan PKL PT Astra', deskripsi: 'Laporan PKL lengkap format PDF. Bimbingan: Pak Sugeng, S.Pd.', kategori: 'Siswa', mapel: 'PKL', tahun: 2025, link: 'https://drive.google.com/file/d/abc123/view.pdf', nama: 'Siti Nurhaliza', tanggal: '2025-12-15', rating: 5 },
-                { judul: 'Modul Pembelajaran IoT', deskripsi: 'Modul ajar Internet of Things untuk kelas XII TKJ. Format PPTX.', kategori: 'Guru', mapel: 'TKJ', tahun: 2026, link: 'https://drive.google.com/file/d/xyz789/view.pptx', nama: 'Pak Budi Santoso', tanggal: '2026-03-20', rating: 4 },
-                { judul: 'Short Film: Hari Terakhir', deskripsi: 'Film pendek 5 menit. Kamera Canon M50, editing Premiere Pro.', kategori: 'Siswa', mapel: 'Multimedia', tahun: 2026, link: 'https://youtu.be/example123', nama: 'Rizky Aditya', tanggal: '2026-05-10', rating: 3 },
-            ];
-        }
-        filterGallery();
-    }
+</div>
 
-    // ============ REGISTRATION ============
-    async function handleRegister(e) {
-        e.preventDefault();
-        const nama = document.getElementById('reg-name').value.trim();
-        const status = document.getElementById('reg-status').value;
-        const jurusan = document.getElementById('reg-dept').value.trim();
-        const kontak = document.getElementById('reg-contact').value.trim();
+<!-- =========================================================
+EMPTY STATE
+========================================================= -->
 
-        // Generate code locally for demo (in production, call API)
-        const parts = nama.split(' ');
-        let prefix = '';
-        if (parts.length >= 2) prefix = (parts[0][0] + parts[1][0] + parts[1][1]).toUpperCase();
-        else prefix = nama.substring(0, 3).toUpperCase();
-        const code = prefix + (Math.floor(Math.random() * 900) + 100);
+<div id="emptyState" class="container text-center py-5 d-none">
 
-        document.getElementById('generated-code').textContent = code;
-        document.getElementById('register-result').classList.remove('hidden');
+    <img src="assets/empty.svg" class="img-fluid mb-4" style="max-width:300px;" alt="Kosong">
 
-        /* Production: uncomment to use API
-        const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'register', nama, status, jurusan, kontak }) });
-        const json = await res.json();
-        if (json.success) { document.getElementById('generated-code').textContent = json.code; document.getElementById('register-result').classList.remove('hidden'); }
-        */
-    }
+    <h3 class="fw-bold">Karya Tidak Ditemukan</h3>
 
-    // ============ LOGIN ============
-    async function handleLogin(e) {
-        e.preventDefault();
-        const code = document.getElementById('login-code').value.trim().toUpperCase();
-        const errorEl = document.getElementById('login-error');
+    <p class="text-secondary">
+        Coba ubah kata kunci pencarian atau filter kategori.
+    </p>
 
-        // Demo: accept any 6-char code
-        if (code.length >= 5) {
-            currentUser = { nama: 'Demo User', status: 'Siswa', jurusan: 'TKJ', kode: code };
-            document.getElementById('backend-user-info').textContent = `${currentUser.nama} (${currentUser.status}) - ${currentUser.jurusan}`;
-            errorEl.classList.add('hidden');
-            navigate('backend');
-        } else {
-            errorEl.textContent = i18n[currentLang].login_error;
-            errorEl.classList.remove('hidden');
-        }
+    <button class="btn btn-primary mt-3" id="resetFilter">
+        <i class="bi bi-arrow-clockwise"></i>
+        Reset Filter
+    </button>
 
-        /* Production: uncomment to use API
-        const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', code }) });
-        const json = await res.json();
-        if (json.success) { currentUser = { ...json, kode: code }; navigate('backend'); }
-        else { errorEl.textContent = i18n[currentLang].login_error; errorEl.classList.remove('hidden'); }
-        */
-    }
+</div>
 
-    function handleLogout() {
-        currentUser = null;
-        navigate('gallery');
-    }
+<!-- =========================================================
+LOAD MORE BUTTON
+========================================================= -->
 
-    // ============ SUBMIT WORK ============
-    async function handleSubmitWork(e) {
-        e.preventDefault();
-        if (!currentUser) { navigate('login'); return; }
+<div class="container text-center my-5">
 
-        const data = {
-            action: 'submit',
-            judul: document.getElementById('work-title').value.trim(),
-            deskripsi: document.getElementById('work-desc').value.trim(),
-            kategori: currentUser.status,
-            mapel: document.getElementById('work-subject').value.trim(),
-            tahun: document.getElementById('work-year').value,
-            link: document.getElementById('work-link').value.trim(),
-            publish: document.getElementById('work-publish').checked,
-            nama: currentUser.nama,
-            kode: currentUser.kode
-        };
+    <button class="btn btn-outline-primary btn-lg" id="loadMore" style="display:none;">
 
-        // Demo: add locally
-        allWorks.unshift({ ...data, tanggal: new Date().toISOString(), rating: 0 });
-        showToast(i18n[currentLang].submit_success);
-        document.getElementById('submit-form').reset();
+        <i class="bi bi-arrow-down-circle"></i>
 
-        /* Production:
-        const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(data) });
-        const json = await res.json();
-        if (json.success) showToast(i18n[currentLang].submit_success);
-        */
-    }
+        Muat Lebih Banyak
 
-    // ============ CERTIFICATE ============
-    function handlePrintCert() {
-        if (!currentUser) return;
-        const certWindow = window.open('', '_blank');
-        const userWorks = allWorks.filter(w => w.nama === currentUser.nama || w.kode === currentUser.kode);
-        certWindow.document.write(`<!DOCTYPE html><html><head><title>Skill Passport - ${currentUser.nama}</title><style>body{font-family:'DM Sans',sans-serif;max-width:800px;margin:0 auto;padding:40px;} h1{text-align:center;color:#065f46;} .header{text-align:center;border-bottom:3px double #065f46;padding-bottom:20px;margin-bottom:30px;} table{width:100%;border-collapse:collapse;margin-top:20px;} th,td{border:1px solid #ccc;padding:8px 12px;text-align:left;font-size:13px;} th{background:#ecfdf5;} @media print{body{padding:20px;}}</style></head><body><div class="header"><h1>📜 SKILL PASSPORT</h1><h2>SMKN 1 Sanden</h2><p><strong>Nama:</strong> ${currentUser.nama} | <strong>Status:</strong> ${currentUser.status} | <strong>Jurusan:</strong> ${currentUser.jurusan}</p><p><strong>Kode:</strong> ${currentUser.kode} | <strong>Tanggal:</strong> ${new Date().toLocaleDateString('id-ID')}</p></div><h3>Daftar Karya / Unjuk Kerja</h3><table><tr><th>No</th><th>Judul</th><th>Mata Pelajaran</th><th>Tahun</th><th>Media</th></tr>${userWorks.map((w, i) => `<tr><td>${i + 1}</td><td>${w.judul}</td><td>${w.mapel}</td><td>${w.tahun}</td><td>${getMediaType(w.link) === 'youtube' ? 'Video' : 'Dokumen'}</td></tr>`).join('')}</table><p style="margin-top:40px;text-align:right;"><em>Dicetak pada: ${new Date().toLocaleString('id-ID')}</em></p><script>setTimeout(()=>window.print(),500)<\/script></body></html>`);
-    }
+    </button>
 
-    // ============ TOAST ============
-    function showToast(msg) {
-        const toast = document.createElement('div');
-        toast.className = 'toast px-4 py-3 rounded-lg bg-emerald-600 text-white text-sm font-medium shadow-lg';
-        toast.textContent = msg;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-    }
+</div>
 
-    // ============ INIT ============
-    document.addEventListener('DOMContentLoaded', () => {
-        lucide.createIcons();
-        loadGallery();
-    });
-    </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0f813c12658fd7c',t:'MTc4MjA5ODAwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<!-- =========================================================
+PREVIEW MODAL
+========================================================= -->
+
+<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-fullscreen">
+
+        <div class="modal-content preview-modal">
+
+            <div class="modal-header border-0">
+
+                <div>
+
+                    <h3 id="previewTitle" class="fw-bold mb-1">Judul Karya</h3>
+
+                    <small id="previewAuthor">Nama Pembuat</small>
+
+                </div>
+
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-lg-8">
+
+                        <div id="previewContainer" class="preview-container"></div>
+
+                    </div>
+
+                    <div class="col-lg-4">
+
+                        <div class="preview-sidebar">
+
+                            <h5>Deskripsi</h5>
+
+                            <p id="previewDescription"></p>
+
+                            <hr>
+
+                            <div class="mb-2"><strong>Kategori :</strong> <span id="previewCategory"></span></div>
+
+                            <div class="mb-2"><strong>Mata Pelajaran :</strong> <span id="previewSubject"></span></div>
+
+                            <div class="mb-2"><strong>Tahun :</strong> <span id="previewYear"></span></div>
+
+                            <div class="mb-2"><strong>Rating :</strong> <span id="previewRating"></span></div>
+
+                            <a id="previewLink" class="btn btn-primary w-100 mt-3" target="_blank">
+
+                                <i class="bi bi-box-arrow-up-right"></i>
+
+                                Buka File
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+LOGIN ADMIN
+========================================================= -->
+
+<div class="modal fade" id="adminModal" tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    <i class="bi bi-shield-lock-fill"></i>
+
+                    Login Administrator
+
+                </h5>
+
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div id="loginBox">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">Kode Akses</label>
+
+                        <input id="accessCode" type="password" class="form-control" placeholder="Masukkan kode akses">
+
+                    </div>
+
+                    <button id="btnLogin" class="btn btn-primary w-100">
+
+                        <i class="bi bi-box-arrow-in-right"></i>
+
+                        Masuk
+
+                    </button>
+
+                    <div id="loginMsg" class="text-danger mt-3"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+ADMIN PANEL
+========================================================= -->
+
+<section id="adminPanel" class="container py-5 d-none">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h3>
+
+            <i class="bi bi-speedometer2"></i>
+
+            Dashboard Admin
+
+        </h3>
+
+        <button id="btnLogout" class="btn btn-outline-danger">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            Logout
+
+        </button>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+
+                Input Data Karya
+
+            </h4>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Judul Karya</label>
+                    <input id="title" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Kategori</label>
+                    <input id="category" class="form-control">
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Deskripsi</label>
+                    <textarea id="description" class="form-control" rows="4"></textarea>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Link Google Drive / YouTube</label>
+                    <input id="link" class="form-control">
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Tahun</label>
+                    <input id="year" class="form-control">
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Mata Pelajaran</label>
+                    <input id="subject" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Nama Pembuat</label>
+                    <input id="author" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Nomor WhatsApp</label>
+                    <input id="whatsappNumber" class="form-control" placeholder="628xxxxxxxxxx">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Generate Sertifikat</label>
+                    <select id="createCertificate" class="form-select">
+                        <option value="no">Tidak</option>
+                        <option value="yes">Ya</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Status</label>
+                    <div class="form-check form-switch mt-2">
+                        <input class="form-check-input" type="checkbox" id="visibleToggle" checked>
+                        <label class="form-check-label">Tampilkan di Galeri</label>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <button id="btnSubmit" class="btn btn-success">
+
+                        <i class="bi bi-cloud-upload-fill"></i>
+
+                        Kirim ke Google Sheets
+
+                    </button>
+
+                    <button id="btnReset" class="btn btn-secondary">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+
+                        Reset
+
+                    </button>
+
+                    <button id="btnBackGallery" class="btn btn-outline-primary">
+
+                        <i class="bi bi-house"></i>
+
+                        Kembali ke Galeri
+
+                    </button>
+
+                </div>
+
+                <div class="col-md-12 mt-3">
+
+                    <div id="formMsg"></div>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="row text-center">
+
+                <div class="col-md-4">
+                    <h6>Total Karya</h6>
+                    <h3 id="adminTotalKarya">0</h3>
+                </div>
+
+                <div class="col-md-4">
+                    <h6>Total Guru</h6>
+                    <h3 id="adminTotalGuru">0</h3>
+                </div>
+
+                <div class="col-md-4">
+                    <h6>Total Siswa</h6>
+                    <h3 id="adminTotalSiswa">0</h3>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================================
+HELP MODAL
+========================================================= -->
+
+<div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    <i class="bi bi-question-circle"></i>
+
+                    Bantuan & Panduan
+
+                </h5>
+
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <h6 class="fw-bold mb-3">Tentang Galeri Karya</h6>
+
+                <p>Galeri Karya adalah portal digital untuk menampilkan karya terbaik guru dan siswa SMK Negeri 1 Sanden.</p>
+
+                <hr>
+
+                <h6 class="fw-bold mb-3">Cara Menggunakan</h6>
+
+                <ul>
+
+                    <li><strong>Cari Karya:</strong> Gunakan kotak pencarian untuk menemukan karya berdasarkan judul, pembuat, atau mata pelajaran.</li>
+
+                    <li><strong>Filter:</strong> Pilih kategori, tahun, atau jenis media untuk menyaring hasil pencarian.</li>
+
+                    <li><strong>Preview:</strong> Klik tombol "Preview" pada karya untuk melihat detail dan membuka file.</li>
+
+                    <li><strong>Dark Mode:</strong> Gunakan tombol bulan untuk mengaktifkan mode gelap.</li>
+
+                </ul>
+
+                <hr>
+
+                <h6 class="fw-bold mb-3">Admin</h6>
+
+                <p>Klik tombol "Admin" untuk login dan mengelola karya yang akan ditampilkan di galeri.</p>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+TOAST NOTIFICATION
+========================================================= -->
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+
+        <div class="toast-body">
+
+            <i class="me-2"></i>
+
+            <span id="toastMessage"></span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+FOOTER
+========================================================= -->
+
+<footer id="tentang" class="bg-dark text-white py-5 mt-5">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-4 mb-4">
+
+                <h5 class="fw-bold mb-3">
+
+                    <i class="bi bi-building"></i>
+
+                    SMK Negeri 1 Sanden
+
+                </h5>
+
+                <p>Sekolah Menengah Kejuruan Negeri 1 Sanden berkomitmen menghasilkan lulusan berkompeten dan berakhlak mulia.</p>
+
+            </div>
+
+            <div class="col-md-4 mb-4">
+
+                <h5 class="fw-bold mb-3">
+
+                    <i class="bi bi-link-45deg"></i>
+
+                    Link Penting
+
+                </h5>
+
+                <ul class="list-unstyled">
+
+                    <li><a href="#gallery" class="text-decoration-none text-light">Galeri Karya</a></li>
+
+                    <li><a href="#statistik" class="text-decoration-none text-light">Statistik</a></li>
+
+                    <li><a href="#tentang" class="text-decoration-none text-light">Tentang</a></li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-4 mb-4">
+
+                <h5 class="fw-bold mb-3">
+
+                    <i class="bi bi-info-circle"></i>
+
+                    Informasi
+
+                </h5>
+
+                <p class="mb-1"><strong>Alamat:</strong> Sanden, Bantul, Yogyakarta</p>
+
+                <p class="mb-1"><strong>Email:</strong> info@smkn1sanden.sch.id</p>
+
+                <p><strong>Telepon:</strong> (0274) 123-4567</p>
+
+            </div>
+
+        </div>
+
+        <hr class="bg-secondary">
+
+        <div class="text-center">
+
+            <p class="mb-0">&copy; 2024 SMK Negeri 1 Sanden. All rights reserved.</p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- =========================================================
+BACK TO TOP BUTTON
+========================================================= -->
+
+<button id="backToTop" class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-3" style="display: none; width: 50px; height: 50px; z-index: 10;">
+
+    <i class="bi bi-arrow-up"></i>
+
+</button>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script -->
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+
 </html>
