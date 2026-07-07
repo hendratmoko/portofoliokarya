@@ -103,11 +103,7 @@ NAVBAR
                         Tentang
                     </a>
                 </li>
-<button class="btn btn-success" id="btnContributor">
-    <i class="bi bi-person-plus"></i>
-    Input Karya
-</button>
-               <!-- ADMIN -->
+                <!-- ADMIN -->
                 <li class="nav-item ms-2">
                     <button
                         class="btn btn-outline-primary"
@@ -118,8 +114,7 @@ NAVBAR
                 </li>
                 <!-- Refresh -->
                 <li class="nav-item ms-2">
-
-                    <button
+                   <button
                         class="icon-btn"
                         id="refreshGallery">
                         <i class="bi bi-arrow-clockwise"></i>
@@ -129,9 +124,7 @@ NAVBAR
                 <li class="nav-item ms-2">
                     <button
                         class="icon-btn"
-
                         id="themeToggle">
-
                         <i class="bi bi-moon-stars"></i>
                     </button>
                 </li>
@@ -139,9 +132,13 @@ NAVBAR
                 <li class="nav-item ms-2">
                     <button
                         class="icon-btn"
+
                         data-bs-toggle="modal"
+
                         data-bs-target="#helpModal">
+
                         <i class="bi bi-question-circle"></i>
+
                     </button>
                 </li>
             </ul>
@@ -213,7 +210,7 @@ STATISTIK
             <div class="stat-card">
                 <i class="bi bi-camera-video-fill"></i>
                 <h2 id="jumlahVideo">
-                    0
+                   0
                 </h2>
                 <p>
                     Video
@@ -376,9 +373,7 @@ GALERI
 SKELETON LOADING
 ========================================================= -->
 <div id="loadingGallery" class="container">
-
     <div class="row g-4">
-
         <div class="col-xl-4 col-lg-4 col-md-6">
             <div class="gallery-card skeleton-card">
                 <div class="skeleton skeleton-image"></div>
@@ -398,7 +393,6 @@ SKELETON LOADING
                 </div>
             </div>
         </div>
-
         <div class="col-xl-4 col-lg-4 col-md-6">
             <div class="gallery-card skeleton-card">
                 <div class="skeleton skeleton-image"></div>
@@ -441,7 +435,7 @@ SKELETON LOADING
 </div>
 <!-- =========================================================
 EMPTY STATE
-========================================================= -->
+======================================================== -->
 <div id="emptyState" class="container text-center py-5 d-none">
     <img src="assets/empty.svg" class="img-fluid mb-4" style="max-width:300px;" alt="Kosong">
     <h3 class="fw-bold">Karya Tidak Ditemukan</h3>
@@ -499,30 +493,6 @@ PREVIEW MODAL
             </div>
         </div>
     </div>
-</div>
-<!-- =========================================================
-Modal Token
-========================================================= -->
-<div class="modal fade" id="tokenModal">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h5>Masukkan Token</h5>
-</div>
-<div class="modal-body">
-<input
-id="userToken"
-class="form-control"
-placeholder="GK26-XXXXXX">
-<button
-id="btnCheckToken"
-class="btn btn-primary w-100 mt-3">
-Masuk
-</button>
-<div id="tokenMessage"></div>
-</div>
-</div>
-</div>
 </div>
 <!-- =========================================================
 LOGIN ADMIN
@@ -744,7 +714,6 @@ FOOTER
 BACK TO TOP BUTTON
 ========================================================= -->
 <button id="backToTop" class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-3" style="display: none; width: 50px; height: 50px; z-index: 10;">
-
     <i class="bi bi-arrow-up"></i>
 </button>
 <!-- Bootstrap -->
@@ -752,7 +721,5 @@ BACK TO TOP BUTTON
 <!-- Script -->
 <script src="config.js"></script>
 <script src="script.js"></script>
-
 </body>
-
 </html>
