@@ -112,6 +112,7 @@ console.log(CONFIG.APP_NAME);
 console.log("Version :",CONFIG.APP_VERSION);
 console.log("School :",CONFIG.SCHOOL_NAME);
 console.log("Debug :",CONFIG.DEBUG);
+
 console.log("================================");
 
 }
