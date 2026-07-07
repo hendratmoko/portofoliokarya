@@ -804,21 +804,57 @@ loginAdmin();
 }
 });
 function loginAdmin(){
-const code=accessCode.value.trim();
+
+const code = accessCode.value.trim();
+
 if(code===""){
-loginMsg.innerHTML="Masukkan kode akses.";
-return;
+    loginMsg.innerHTML="Masukkan Token.";
+    return;
 }
-if(code!==CONFIG.ACCESS_CODE){
-loginMsg.innerHTML="Kode akses salah.";
-showToast("Kode akses salah.","error");
-return;
+
+/* ADMIN */
+
+if(code===CONFIG.ACCESS_CODE){
+
+    USER.role="admin";
+    USER.name="Administrator";
+
+    saveLogin();
+    isLoggedIn=true;
+
+    adminModal.hide();
+    showDashboard();
+    buildGallery();
+
+    showToast("Login Admin berhasil.");
+
+    return;
 }
+
+/* GURU / SISWA */
+
+const akun = CONFIG.USER_TOKEN.find(x=>x.token===code);
+
+if(!akun){
+
+    loginMsg.innerHTML="Token tidak ditemukan.";
+    showToast("Token salah.","error");
+    return;
+}
+
+USER.role=akun.role;
+USER.name=akun.name;
+
 saveLogin();
 isLoggedIn=true;
+
 adminModal.hide();
+
 showDashboard();
-showToast("Login berhasil.");
+
+buildGallery();
+
+showToast("Selamat datang "+akun.name);
 }
 /*==========================
 SHOW DASHBOARD
