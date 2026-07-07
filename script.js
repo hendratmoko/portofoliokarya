@@ -15,6 +15,9 @@ const loadingOverlay=document.getElementById("loadingOverlay");
 const toastElement=document.getElementById("liveToast");
 const toastMessage=document.getElementById("toastMessage");
 const toast=new bootstrap.Toast(toastElement);
+const USER = {token: null,
+    role: "guest",     // guest | guru | siswa | admin
+    name: ""};
 /*==========================
 LOADER
 ==========================*/
